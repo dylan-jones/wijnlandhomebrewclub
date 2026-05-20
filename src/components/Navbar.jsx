@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import PrimaryButton from "./PrimaryButton";
 
 const Nav = styled.nav`
   background: var(--white);
@@ -9,6 +10,7 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
   flex: 1;
+  height: 8rem;
   border-bottom: 4px solid var(--black);
 `;
 
@@ -53,6 +55,7 @@ const LogoText = styled.span`
   font-family: var(--font-bebas);
   font-size: var(--header-font-size-lg);
   color: var(--black);
+  line-height: 1;
 `;
 
 export default function Navbar() {
@@ -84,9 +87,9 @@ export default function Navbar() {
             </li>
           ))}
         </NavLinks>
-        <a href="#join" className="btn btn-nav-join">
-          JOIN THE CLUB
-        </a>
+        <PrimaryButton onClick={() => alert("Join the club!")}>
+          Join the club
+        </PrimaryButton>
       </NavInner>
     </Nav>
   );
