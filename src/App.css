@@ -19,10 +19,20 @@
   --text:        #2c2c2c;
   --text-muted:  #666666;
   --max-w:       1200px;
+  --font-bebas: 'Bebas Neue', sans-serif;
+  --font-space: 'Space Grotesk', sans-serif; 
+  --font-work: 'Work Sans', sans-serif;
+
+  --header-font-size-xl: 4.1rem;
+  --header-font-size-lg: 3.6rem;
+  --header-font-size-md: 2.4rem;
+  --body-font-size: 1.6rem;
+  --btn-font-size: 2rem;
 }
 
 html {
   scroll-behavior: smooth;
+  font-size: 62.5%; /* 1rem = 10px */
 }
 
 body {
@@ -120,71 +130,6 @@ ul { list-style: none; }
   margin-top: 2rem;
 }
 
-/* ─────────────────────────────────────────
-   NAVBAR
-───────────────────────────────────────── */
-.navbar {
-  background: var(--black);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  padding: 0.8rem 0;
-  border-bottom: 1px solid rgba(196, 151, 58, 0.2);
-}
-
-.nav-inner {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.nav-brand {
-  color: var(--white);
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.nav-links {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  gap: 2.5rem;
-}
-
-.nav-links a {
-  color: rgba(255, 255, 255, 0.85);
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 400;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--gold); }
-
-.nav-toggle {
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 24px;
-  height: 18px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  margin-left: auto;
-  padding: 0;
-}
-.nav-toggle span {
-  display: block;
-  height: 2px;
-  width: 100%;
-  background: var(--white);
-  border-radius: 2px;
-}
 
 /* ─────────────────────────────────────────
    HERO
