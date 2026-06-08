@@ -12,6 +12,11 @@ const WelcomeGrid = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 5rem;
   align-items: center;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
 `;
 
 const WelcomeText = styled.div`
@@ -28,6 +33,13 @@ const WelcomeText = styled.div`
 
   p {
     margin-bottom: 1.6rem;
+  }
+
+  @media (max-width: 640px) {
+    h2 {
+      font-size: 3rem;
+      line-height: 3.4rem;
+    }
   }
 `;
 
@@ -53,6 +65,11 @@ const WelcomeImage = styled.div`
     z-index: -1;
     transform: translate(0.8rem, 0.8rem);
   }
+
+  @media (max-width: 900px) {
+    max-width: 640px;
+    margin: 0 auto;
+  }
 `;
 
 const Caption = styled.figcaption`
@@ -72,12 +89,23 @@ const Caption = styled.figcaption`
   display: inline-block;
   padding: 0.8rem 1.6rem;
   transform: rotate(3deg) translateX(-50%) translateY(4rem);
+
+  @media (max-width: 640px) {
+    position: static;
+    transform: rotate(2deg);
+    margin-top: 1.2rem;
+    white-space: normal;
+  }
 `;
 
 const ButtonGroup = styled.div`
   display: flex;
   gap: 1.6rem;
   margin-top: 2.4rem;
+
+  @media (max-width: 640px) {
+    flex-wrap: wrap;
+  }
 `;
 
 export default function Welcome() {
@@ -101,10 +129,10 @@ export default function Welcome() {
           </p>
           <p><strong>No pretence. Just better beer.</strong></p>
           <ButtonGroup>
-            <PrimaryButton onClick={() => alert("Join the club!")}>
+            <PrimaryButton href="#join">
               Join the club
             </PrimaryButton>
-            <PrimaryButton onClick={() => alert("Contact us!")} outline>
+            <PrimaryButton href="#contact" outline>
               Contact us
             </PrimaryButton>
           </ButtonGroup>

@@ -17,12 +17,12 @@ function SilhouetteAvatar() {
 
 export default function Committee() {
   return (
-    <section className="committee-section">
+    <section className="committee-section" id="committee">
       <div className="container">
         <h2 className="section-title">THE COMMITTEE</h2>
         <div className="committee-grid">
-          {committeeData.map((m, i) => (
-            <div className="committee-card" key={i}>
+          {committeeData.map((m) => (
+            <div className="committee-card" key={`${m.name}-${m.style}-${m.arc}`}>
               <div className="member-avatar"><SilhouetteAvatar /></div>
               <h4>{m.name}</h4>
               <p className="member-meta">FAV. STYLE &nbsp;<span>{m.style}</span></p>

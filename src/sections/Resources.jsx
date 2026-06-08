@@ -20,15 +20,15 @@ function PdfIcon() {
 
 export default function Resources() {
   return (
-    <section className="section resources-section">
+    <section className="section resources-section" id="resources">
       <div className="container">
-        <h2 className="section-title">RECOURCES</h2>
+        <h2 className="section-title">RESOURCES</h2>
         <div className="resources-grid">
-          {resourcesData.map((name, i) => (
-            <div className="resource-card" key={i}>
+          {resourcesData.map((name) => (
+            <div className="resource-card" key={name}>
               <PdfIcon />
               <p className="resource-name">{name}</p>
-              <a href="#" className="resource-link">VIEW / DOWNLOAD</a>
+              <button type="button" className="resource-link">VIEW / DOWNLOAD</button>
             </div>
           ))}
         </div>

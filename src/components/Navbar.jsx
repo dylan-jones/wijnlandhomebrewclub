@@ -87,7 +87,7 @@ export default function Navbar() {
             </li>
           ))}
         </NavLinks>
-        <PrimaryButton onClick={() => alert("Join the club!")}>
+        <PrimaryButton href="#join">
           Join the club
         </PrimaryButton>
       </NavInner>

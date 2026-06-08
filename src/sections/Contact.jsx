@@ -22,14 +22,19 @@ export default function Contact() {
         </div>
         <form className="club-form" onSubmit={submit}>
           <div className="form-row">
-            <input name="fn" placeholder="First Name" value={form.fn} onChange={set} required />
-            <input name="ln" placeholder="Last Name" value={form.ln} onChange={set} required />
+            <label className="sr-only" htmlFor="contact-fn">First Name</label>
+            <input id="contact-fn" name="fn" placeholder="First Name" value={form.fn} onChange={set} autoComplete="given-name" required />
+            <label className="sr-only" htmlFor="contact-ln">Last Name</label>
+            <input id="contact-ln" name="ln" placeholder="Last Name" value={form.ln} onChange={set} autoComplete="family-name" required />
           </div>
           <div className="form-row">
-            <input name="loc" placeholder="Location" value={form.loc} onChange={set} />
-            <input name="tel" placeholder="Contact Number" value={form.tel} onChange={set} />
+            <label className="sr-only" htmlFor="contact-loc">Location</label>
+            <input id="contact-loc" name="loc" placeholder="Location" value={form.loc} onChange={set} autoComplete="address-level2" />
+            <label className="sr-only" htmlFor="contact-tel">Contact Number</label>
+            <input id="contact-tel" name="tel" placeholder="Contact Number" value={form.tel} onChange={set} type="tel" autoComplete="tel" />
           </div>
-          <textarea name="msg" placeholder="Message" value={form.msg} onChange={set} rows={5} />
+          <label className="sr-only" htmlFor="contact-msg">Message</label>
+          <textarea id="contact-msg" name="msg" placeholder="Message" value={form.msg} onChange={set} rows={5} />
           <button type="submit" className="btn btn-dark">SUBMIT</button>
         </form>
       </div>

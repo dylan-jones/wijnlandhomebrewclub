@@ -1,35 +1,77 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { pic } from '../utils/helpers';
 
-const eventsData = [
-  { name: 'Brew Day #12', type: 'BREW SESSION', date: '10 MAY', address: '14 Hop Street', city: 'STELLENBOSCH', desc: 'Join us for a full-day brew session. All experience levels welcome. Bring your tasting notes and a good attitude.' },
-  { name: 'Pale Ale Tasting', type: 'TASTING EVENT', date: '18 MAY', address: '7 Barrel Lane', city: 'PAARL', desc: 'Side-by-side tasting of six pale ales brewed by our members over the last quarter.' },
-  { name: 'HBX Competition', type: 'COMPETITION', date: '02 JUN', address: 'HBX Venue, Main Rd', city: 'CAPE TOWN', desc: 'Annual homebrewing competition. Submit your best brew for judging by industry professionals.' },
-  { name: 'Lager Experiment', type: 'BREW SESSION', date: '14 JUN', address: '22 Grain Road', city: 'FRANSCHHOEK', desc: 'A focused session on lagering techniques — cold fermentation, conditioning, and clarity tips.' },
-  { name: 'Winter Warmer', type: 'SOCIAL EVENT', date: '28 JUN', address: 'Bloemhof Estate', city: 'WELLINGTON', desc: 'End-of-winter social gathering. Bring a bottle to share and enjoy the fireside with fellow brewers.' },
-  { name: 'Pro Collab Brew', type: 'COLLAB BREW', date: '12 JUL', address: 'Stellenbrau Brewery', city: 'STELLENBOSCH', desc: 'Exclusive collaboration brew session with the team at Stellenbrau. Limited spots available.' },
-];
+const CALENDAR_ID = 'fa7408367d1882778e4b1ff18d5a1d498c3c39e4743b91c9448b41c25475832d@group.calendar.google.com';
+const API_KEY = import.meta.env.VITE_GOOGLE_CALENDAR_API_KEY;
+
+function formatDate(start) {
+  const date = start.dateTime ? new Date(start.dateTime) : new Date(start.date + 'T00:00:00');
+  return date.toLocaleDateString('en-ZA', { day: '2-digit', month: 'short' }).toUpperCase();
+}
+
+function parseLocation(location = '') {
+  const parts = location.split(',').map(s => s.trim()).filter(Boolean);
+  if (parts.length === 0) return { address: '', city: '' };
+  if (parts.length === 1) return { address: parts[0], city: '' };
+  const city = parts.at(-1);
+  const address = parts.slice(0, -1).join(', ');
+  return { address, city };
+}
 
 export default function Events() {
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const now = new Date().toISOString();
+    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events?key=${API_KEY}&orderBy=startTime&singleEvents=true&timeMin=${encodeURIComponent(now)}&maxResults=6`;
+
+    fetch(url)
+      .then(res => {
+        if (!res.ok) throw new Error(`Calendar API error ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        const mapped = (data.items || []).map(ev => {
+          const { address, city } = parseLocation(ev.location);
+          return {
+            name: ev.summary || 'Untitled Event',
+            date: formatDate(ev.start),
+            address,
+            city,
+            desc: ev.description || '',
+          };
+        });
+        setEvents(mapped);
+      })
+      .catch(err => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <section className="section events-section" id="events">
       <div className="container">
         <h2 className="section-title">UPCOMING EVENTS</h2>
-        <div className="events-grid">
-          {eventsData.map((ev, i) => (
-            <div className="event-card" key={i}>
-              <img src={pic(150, 160, `ev${i + 1}`)} alt={ev.name} className="event-img" />
+        {loading && <p className="event-meta" aria-live="polite">Loading events...</p>}
+        {error && <p className="event-meta" role="alert">Could not load events.</p>}
+        {!loading && !error && events.length === 0 && (
+          <p className="event-meta">No upcoming events scheduled.</p>
+        )}
+        <ul className="events-grid" aria-label="Upcoming events">
+          {events.map((ev) => (
+            <li className="event-card" key={`${ev.name}-${ev.date}-${ev.address || 'n-a'}-${ev.city || 'n-a'}-${ev.desc || 'n-a'}`}>
+              <img src={pic(150, 160, `${ev.name}-${ev.date}`)} alt={ev.name} className="event-img" />
               <div className="event-details">
                 <h4>{ev.name}</h4>
-                <p className="event-meta">{ev.type}</p>
                 <p className="event-meta">{ev.date}</p>
-                <p className="event-meta">{ev.address}</p>
-                <p className="event-meta">{ev.city}</p>
-                <p className="event-desc">{ev.desc}</p>
+                {ev.address && <p className="event-meta">{ev.address}</p>}
+                {ev.city && <p className="event-meta">{ev.city}</p>}
+                {ev.desc && <p className="event-desc">{ev.desc}</p>}
               </div>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

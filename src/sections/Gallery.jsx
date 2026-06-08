@@ -10,8 +10,8 @@ export default function Gallery() {
         <h2 className="section-title">GALLERY</h2>
         <div className="gallery-grid">
           {gallerySeeds.map((s, i) => (
-            <div className="gallery-item" key={i}>
-              <img src={pic(400, 300, s)} alt="" />
+            <div className="gallery-item" key={s}>
+              <img src={pic(400, 300, s)} alt={`Brew club moment ${i + 1}`} loading="lazy" />
             </div>
           ))}
         </div>
