@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { pic } from '../utils/helpers';
-import { Container, Section } from '../styles/GlobalStyles';
+import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
 
 const AboutSection = styled(Section)`
   background: var(--white);
@@ -9,8 +9,8 @@ const AboutSection = styled(Section)`
 
 const AboutGrid = styled(Container)`
   display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 4rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 14rem;
   align-items: start;
 
   @media (max-width: 900px) {
@@ -20,41 +20,20 @@ const AboutGrid = styled(Container)`
 `;
 
 const AboutText = styled.div`
-  h2 {
-    font-family: 'Oswald', sans-serif;
-    font-size: 2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-bottom: 1.5rem;
-  }
-
   h3 {
-    font-family: 'Oswald', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
+    font-family: var(--font-space);
+    font-size: 2rem;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin: 2rem 0 0.75rem;
-    color: var(--text);
-  }
-
-  p {
-    font-size: 0.93rem;
-    line-height: 1.7;
-    margin-bottom: 0.75rem;
-    color: var(--text);
+    margin: 2.4rem 0;
   }
 `;
 
 const ProList = styled.ul`
-  margin: 0.5rem 0 1rem 0.5rem;
+  margin: 2.4rem 0;
 
   li {
-    font-style: italic;
-    font-size: 0.93rem;
     padding: 0.2rem 0;
-    color: var(--text);
+    font-weight: 700;
   }
 
   li::before {
@@ -92,11 +71,6 @@ const CupBadge = styled.div`
     text-transform: uppercase;
     margin-bottom: 0.2rem;
   }
-
-  p {
-    font-size: 0.82rem;
-    color: var(--text-muted);
-  }
 `;
 
 export default function AboutUs() {
@@ -104,38 +78,31 @@ export default function AboutUs() {
     <AboutSection id="about">
       <AboutGrid>
         <AboutText>
-          <h2>ABOUT US</h2>
+          <SectionTitle>ABOUT US</SectionTitle>
           <p>
-            Established in 2020, our club started just like most great beers — as a shared vision
-            that bubbled over into something real. We have homebrewers from the Cape, Winelands
-            and enthusiasts from all over Cape Town who gather here.
+            Established in 20XX, our club started just like most great beers: as a small-scale experiment that bubbled over into something much bigger. While we are firmly rooted in the Winelands, our reach stretches across the Cape, drawing in makers and enthusiasts from all over Cape Town who share a common obsession with the perfect pour.
           </p>
           <h3>Why We Get Together</h3>
           <p>
-            At our core, we believe brewing is better when it's shared. Our main goal is simple:
-            to provide a social, non-serious environment that invites the focus to meet weekly to
-            discuss the brew, refine recipes, and simply enjoy the community.
+            At our core, we believe brewing is better when it’s shared. Our main goal is simple: to provide a social, non-serious environment where the focus is on the craft and the community. We aren’t here to lecture; we’re here to swap recipes, share our latest bottles, and trade the tips that save a batch from the drain.
           </p>
           <h3>Competitions with a Purpose</h3>
           <p>
-            Our club competitions aren't about high-stakes pressure — they're a chance to step up,
-            experiment with different varieties and, of course, taste the creations without taking
-            the fun out of the hobby.
+            Our club competitions aren't about high-stakes pressure—they’re about exploration. We use them as an excuse to try out new styles, experiment with different varieties, and, of course, win some great prizes along the way. It’s the ultimate way to push your boundaries without losing the fun of the hobby.
           </p>
           <h3>Pro Connections</h3>
           <p>
-            We don't brew in a vacuum. We're proud of our strong relationships with the local
-            brewing industry for insights and guidance. We're associated with:
+            We don’t brew in a vacuum. We’re proud of our strong relationships with the titans of the local industry. Our members enjoy unique access to the insights and expertise of head brewers from world-class local spots, including:
           </p>
           <ProList>
-            <li>HBX</li>
-            <li>Stellenbrau</li>
-            <li>Bloemhof</li>
-            <li>Bosman's</li>
+            <li>CBC</li>
+            <li>Soul Barrel</li>   
+            <li>KCB</li>
+            <li>Lilypatrick</li>
+            <li>Franschhoek Beer Company</li>
           </ProList>
           <p>
-            Whether you're looking for professional advice or just want to level up, we bridge
-            the gap between homebrewers and the pros.
+            Whether you're looking for professional advice or just want to see how the big rigs do it, these connections help us bridge the gap between homebrewers and the pros.
           </p>
         </AboutText>
         <AboutRight>

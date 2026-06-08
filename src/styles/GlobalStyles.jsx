@@ -99,13 +99,12 @@ export const Container = styled.div`
 `;
 
 export const SectionTitle = styled.h2`
-  font-family: 'Oswald', sans-serif;
-  font-size: 2rem;
+    font-family: var(--font-space);
+  font-size: 3.6rem;
+  line-height: 4.2rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 4px;
-  text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2.4rem;
 `;
 
 export const TwoColumnGrid = styled.div`

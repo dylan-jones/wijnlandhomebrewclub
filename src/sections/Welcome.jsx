@@ -2,7 +2,7 @@ import React from 'react';
 import { pic } from '../utils/helpers';
 import styled from 'styled-components';
 import PrimaryButton from '../components/PrimaryButton';
-import { Container, Section } from '../styles/GlobalStyles';
+import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
 
 const WelcomeSection = styled(Section)`
   background: var(--white);
@@ -23,14 +23,6 @@ const WelcomeGrid = styled(Container)`
 const WelcomeText = styled.div`
   position: relative;
   z-index: 1;
-
-  h2 {
-    font-family: var(--font-space);
-    font-size: var(--header-font-size-lg);
-    text-transform: uppercase;
-    line-height: 4.2rem;
-    margin-bottom: 2.4rem;
-  }
 
   p {
     margin-bottom: 1.6rem;
@@ -114,7 +106,7 @@ export default function Welcome() {
     <WelcomeSection>
       <WelcomeGrid>
         <WelcomeText>
-          <h2>WELCOME TO WIJNLAND<br />HOMEBREW CLUB</h2>
+          <SectionTitle>WELCOME TO WIJNLAND<br />HOMEBREW CLUB</SectionTitle>
           <p>
             <strong>This isn't your grandfather's social club.</strong> We aren't here for the sweet
             conversation, or to discuss handshakes, we're here for the chemistry, the brewing.
