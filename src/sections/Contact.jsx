@@ -1,4 +1,19 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+import {
+  Container,
+  Form,
+  FormGrid,
+  HiddenLabel,
+  Section,
+  SecondaryButton,
+  TextColumn,
+  TwoColumnGrid,
+} from '../styles/GlobalStyles';
+
+const ContactSection = styled(Section)`
+  background: var(--off-white);
+`;
 
 export default function Contact() {
   const [form, setForm] = useState({ fn: '', ln: '', loc: '', tel: '', msg: '' });
@@ -9,9 +24,10 @@ export default function Contact() {
     setForm({ fn: '', ln: '', loc: '', tel: '', msg: '' });
   };
   return (
-    <section className="section contact-section" id="contact">
-      <div className="container two-col-grid">
-        <div className="col-text">
+    <ContactSection id="contact">
+      <Container>
+        <TwoColumnGrid>
+          <TextColumn>
           <h2>CONTACT US</h2>
           <p>
             Have a question, feedback, or just want to say hi? We'd love to hear from you.
@@ -19,25 +35,26 @@ export default function Contact() {
             as possible.
           </p>
           <p>Fill out this form and we'll get back to you soon.</p>
-        </div>
-        <form className="club-form" onSubmit={submit}>
-          <div className="form-row">
-            <label className="sr-only" htmlFor="contact-fn">First Name</label>
+          </TextColumn>
+        <Form onSubmit={submit}>
+          <FormGrid>
+            <HiddenLabel htmlFor="contact-fn">First Name</HiddenLabel>
             <input id="contact-fn" name="fn" placeholder="First Name" value={form.fn} onChange={set} autoComplete="given-name" required />
-            <label className="sr-only" htmlFor="contact-ln">Last Name</label>
+            <HiddenLabel htmlFor="contact-ln">Last Name</HiddenLabel>
             <input id="contact-ln" name="ln" placeholder="Last Name" value={form.ln} onChange={set} autoComplete="family-name" required />
-          </div>
-          <div className="form-row">
-            <label className="sr-only" htmlFor="contact-loc">Location</label>
+          </FormGrid>
+          <FormGrid>
+            <HiddenLabel htmlFor="contact-loc">Location</HiddenLabel>
             <input id="contact-loc" name="loc" placeholder="Location" value={form.loc} onChange={set} autoComplete="address-level2" />
-            <label className="sr-only" htmlFor="contact-tel">Contact Number</label>
+            <HiddenLabel htmlFor="contact-tel">Contact Number</HiddenLabel>
             <input id="contact-tel" name="tel" placeholder="Contact Number" value={form.tel} onChange={set} type="tel" autoComplete="tel" />
-          </div>
-          <label className="sr-only" htmlFor="contact-msg">Message</label>
+          </FormGrid>
+          <HiddenLabel htmlFor="contact-msg">Message</HiddenLabel>
           <textarea id="contact-msg" name="msg" placeholder="Message" value={form.msg} onChange={set} rows={5} />
-          <button type="submit" className="btn btn-dark">SUBMIT</button>
-        </form>
-      </div>
-    </section>
+          <SecondaryButton type="submit">SUBMIT</SecondaryButton>
+        </Form>
+        </TwoColumnGrid>
+      </Container>
+    </ContactSection>
   );
 }

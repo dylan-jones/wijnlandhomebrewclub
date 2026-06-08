@@ -1,5 +1,64 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { pic } from '../utils/helpers';
+import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
+
+const EventsSection = styled(Section)`
+  background: var(--light-gray);
+`;
+
+const EventsGrid = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const EventCard = styled.li`
+  background: var(--white);
+  display: flex;
+  border: 1px solid var(--mid-gray);
+  overflow: hidden;
+`;
+
+const EventImage = styled.img`
+  width: 140px;
+  min-height: 160px;
+  flex-shrink: 0;
+  object-fit: cover;
+`;
+
+const EventDetails = styled.div`
+  padding: 1.25rem;
+  flex: 1;
+
+  h4 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+`;
+
+const EventMeta = styled.p`
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.9;
+`;
+
+const EventDescription = styled.p`
+  font-size: 0.8rem;
+  color: var(--text);
+  line-height: 1.55;
+  margin-top: 0.6rem;
+`;
 
 const CALENDAR_ID = 'fa7408367d1882778e4b1ff18d5a1d498c3c39e4743b91c9448b41c25475832d@group.calendar.google.com';
 const API_KEY = import.meta.env.VITE_GOOGLE_CALENDAR_API_KEY;
@@ -50,29 +109,29 @@ export default function Events() {
   }, []);
 
   return (
-    <section className="section events-section" id="events">
-      <div className="container">
-        <h2 className="section-title">UPCOMING EVENTS</h2>
-        {loading && <p className="event-meta" aria-live="polite">Loading events...</p>}
-        {error && <p className="event-meta" role="alert">Could not load events.</p>}
+    <EventsSection id="events">
+      <Container>
+        <SectionTitle>UPCOMING EVENTS</SectionTitle>
+        {loading && <EventMeta aria-live="polite">Loading events...</EventMeta>}
+        {error && <EventMeta role="alert">Could not load events.</EventMeta>}
         {!loading && !error && events.length === 0 && (
-          <p className="event-meta">No upcoming events scheduled.</p>
+          <EventMeta>No upcoming events scheduled.</EventMeta>
         )}
-        <ul className="events-grid" aria-label="Upcoming events">
+        <EventsGrid aria-label="Upcoming events">
           {events.map((ev) => (
-            <li className="event-card" key={`${ev.name}-${ev.date}-${ev.address || 'n-a'}-${ev.city || 'n-a'}-${ev.desc || 'n-a'}`}>
-              <img src={pic(150, 160, `${ev.name}-${ev.date}`)} alt={ev.name} className="event-img" />
-              <div className="event-details">
+            <EventCard key={`${ev.name}-${ev.date}-${ev.address || 'n-a'}-${ev.city || 'n-a'}-${ev.desc || 'n-a'}`}>
+              <EventImage src={pic(150, 160, `${ev.name}-${ev.date}`)} alt={ev.name} />
+              <EventDetails>
                 <h4>{ev.name}</h4>
-                <p className="event-meta">{ev.date}</p>
-                {ev.address && <p className="event-meta">{ev.address}</p>}
-                {ev.city && <p className="event-meta">{ev.city}</p>}
-                {ev.desc && <p className="event-desc">{ev.desc}</p>}
-              </div>
-            </li>
+                <EventMeta>{ev.date}</EventMeta>
+                {ev.address && <EventMeta>{ev.address}</EventMeta>}
+                {ev.city && <EventMeta>{ev.city}</EventMeta>}
+                {ev.desc && <EventDescription>{ev.desc}</EventDescription>}
+              </EventDetails>
+            </EventCard>
           ))}
-        </ul>
-      </div>
-    </section>
+        </EventsGrid>
+      </Container>
+    </EventsSection>
   );
 }

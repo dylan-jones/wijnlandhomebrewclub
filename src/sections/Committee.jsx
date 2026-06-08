@@ -1,4 +1,59 @@
 import React from 'react';
+import styled from 'styled-components';
+import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
+
+const CommitteeSection = styled(Section)`
+  background: var(--light-gray);
+`;
+
+const CommitteeGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const CommitteeCard = styled.div`
+  background: var(--white);
+  border: 1px solid var(--mid-gray);
+  padding: 2.5rem 2rem;
+  text-align: center;
+
+  h4 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+`;
+
+const MemberAvatar = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+`;
+
+const MemberMeta = styled.p`
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.3rem;
+
+  span {
+    color: var(--text);
+    font-weight: 600;
+  }
+`;
 
 const committeeData = [
   { name: 'NAME SURNAME', style: 'IPA', arc: '234' },
@@ -17,20 +72,20 @@ function SilhouetteAvatar() {
 
 export default function Committee() {
   return (
-    <section className="committee-section" id="committee">
-      <div className="container">
-        <h2 className="section-title">THE COMMITTEE</h2>
-        <div className="committee-grid">
+    <CommitteeSection id="committee">
+      <Container>
+        <SectionTitle>THE COMMITTEE</SectionTitle>
+        <CommitteeGrid>
           {committeeData.map((m) => (
-            <div className="committee-card" key={`${m.name}-${m.style}-${m.arc}`}>
-              <div className="member-avatar"><SilhouetteAvatar /></div>
+            <CommitteeCard key={`${m.name}-${m.style}-${m.arc}`}>
+              <MemberAvatar><SilhouetteAvatar /></MemberAvatar>
               <h4>{m.name}</h4>
-              <p className="member-meta">FAV. STYLE &nbsp;<span>{m.style}</span></p>
-              <p className="member-meta">ARC &nbsp;<span>{m.arc}</span></p>
-            </div>
+              <MemberMeta>FAV. STYLE &nbsp;<span>{m.style}</span></MemberMeta>
+              <MemberMeta>ARC &nbsp;<span>{m.arc}</span></MemberMeta>
+            </CommitteeCard>
           ))}
-        </div>
-      </div>
-    </section>
+        </CommitteeGrid>
+      </Container>
+    </CommitteeSection>
   );
 }

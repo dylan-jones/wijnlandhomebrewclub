@@ -1,4 +1,58 @@
 import React from 'react';
+import styled from 'styled-components';
+import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
+
+const ResourcesSection = styled(Section)`
+  background: var(--light-gray);
+`;
+
+const ResourcesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.75rem;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+`;
+
+const ResourceCard = styled.div`
+  background: var(--white);
+  border: 1px solid var(--mid-gray);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+`;
+
+const ResourceName = styled.p`
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text);
+`;
+
+const ResourceButton = styled.button`
+  font-size: 0.75rem;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 1px;
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--gold-light);
+    border-color: var(--gold-light);
+  }
+`;
 
 const resourcesData = [
   'Brew Day Guide',
@@ -20,19 +74,19 @@ function PdfIcon() {
 
 export default function Resources() {
   return (
-    <section className="section resources-section" id="resources">
-      <div className="container">
-        <h2 className="section-title">RESOURCES</h2>
-        <div className="resources-grid">
+    <ResourcesSection id="resources">
+      <Container>
+        <SectionTitle>RESOURCES</SectionTitle>
+        <ResourcesGrid>
           {resourcesData.map((name) => (
-            <div className="resource-card" key={name}>
+            <ResourceCard key={name}>
               <PdfIcon />
-              <p className="resource-name">{name}</p>
-              <button type="button" className="resource-link">VIEW / DOWNLOAD</button>
-            </div>
+              <ResourceName>{name}</ResourceName>
+              <ResourceButton type="button">VIEW / DOWNLOAD</ResourceButton>
+            </ResourceCard>
           ))}
-        </div>
-      </div>
-    </section>
+        </ResourcesGrid>
+      </Container>
+    </ResourcesSection>
   );
 }

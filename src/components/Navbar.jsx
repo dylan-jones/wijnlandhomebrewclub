@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import PrimaryButton from "./PrimaryButton";
+import { Container } from "../styles/GlobalStyles";
 
 const Nav = styled.nav`
   background: var(--white);
@@ -14,7 +15,7 @@ const Nav = styled.nav`
   border-bottom: 4px solid var(--black);
 `;
 
-const NavInner = styled.div`
+const NavInner = styled(Container)`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -25,6 +26,19 @@ const NavLinks = styled.ul`
     list-style: none;
     display: flex;
     gap: 2rem;
+
+    @media (max-width: 640px) {
+      display: ${({ $open }) => ($open ? "flex" : "none")};
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--black);
+      flex-direction: column;
+      padding: 1.5rem 2rem;
+      gap: 1.25rem;
+      border-top: 1px solid rgba(196, 151, 58, 0.2);
+    }
 
     li {
         a {
@@ -38,6 +52,10 @@ const NavLinks = styled.ul`
                 color: var(--primary);
                 font-weight: 700;
             }
+
+            @media (max-width: 640px) {
+              color: var(--white);
+            }
         }
     }
 `;
@@ -49,6 +67,17 @@ const Hamburger = styled.button`
     background: none;
     border: none;
     cursor: pointer;
+
+    span {
+      width: 20px;
+      height: 2px;
+      background: var(--black);
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      display: flex;
+    }
 `;
 
 const LogoText = styled.span`
@@ -58,14 +87,19 @@ const LogoText = styled.span`
   line-height: 1;
 `;
 
+const JoinCtaWrap = styled.div`
+  @media (max-width: 640px) {
+    display: none;
+  }
+`;
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   return (
-    <Nav className="navbar">
-      <NavInner className="container ">
-        <LogoText className="nav-brand">WIJNLAND HOMEBREW CLUB</LogoText>
+    <Nav>
+      <NavInner>
+        <LogoText>WIJNLAND HOMEBREW CLUB</LogoText>
         <Hamburger
-          className="nav-toggle"
           onClick={() => setOpen(!open)}
           aria-label="Menu"
         >
@@ -73,7 +107,7 @@ export default function Navbar() {
           <span />
           <span />
         </Hamburger>
-        <NavLinks className={`nav-links${open ? " open" : ""}`}>
+        <NavLinks $open={open}>
           {[
             ["HOME", "#home"],
             ["ABOUT", "#about"],
@@ -87,9 +121,9 @@ export default function Navbar() {
             </li>
           ))}
         </NavLinks>
-        <PrimaryButton href="#join">
-          Join the club
-        </PrimaryButton>
+        <JoinCtaWrap>
+          <PrimaryButton href="#join">Join the club</PrimaryButton>
+        </JoinCtaWrap>
       </NavInner>
     </Nav>
   );

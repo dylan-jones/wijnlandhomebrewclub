@@ -1,4 +1,19 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+import {
+  Container,
+  Form,
+  FormGrid,
+  HiddenLabel,
+  Section,
+  SecondaryButton,
+  TextColumn,
+  TwoColumnGrid,
+} from '../styles/GlobalStyles';
+
+const JoinSection = styled(Section)`
+  background: var(--white);
+`;
 
 export default function JoinForm() {
   const [form, setForm] = useState({ fn: '', ln: '', loc: '', tel: '', msg: '' });
@@ -9,9 +24,10 @@ export default function JoinForm() {
     setForm({ fn: '', ln: '', loc: '', tel: '', msg: '' });
   };
   return (
-    <section className="section join-section" id="join">
-      <div className="container two-col-grid">
-        <div className="col-text">
+    <JoinSection id="join">
+      <Container>
+        <TwoColumnGrid>
+          <TextColumn>
           <h2>INTERESTED IN JOINING?</h2>
           <p>
             Ready to see what's on tap? Whether you're a seasoned pro or a first-timer, we
@@ -23,25 +39,26 @@ export default function JoinForm() {
             discuss all things fermented and maybe enjoy a cold one.
           </p>
           <p>Fill out this form and we'll get back to you soon.</p>
-        </div>
-        <form className="club-form" onSubmit={submit}>
-          <div className="form-row">
-            <label className="sr-only" htmlFor="join-fn">First Name</label>
+          </TextColumn>
+          <Form onSubmit={submit}>
+            <FormGrid>
+            <HiddenLabel htmlFor="join-fn">First Name</HiddenLabel>
             <input id="join-fn" name="fn" placeholder="First Name" value={form.fn} onChange={set} autoComplete="given-name" required />
-            <label className="sr-only" htmlFor="join-ln">Last Name</label>
+            <HiddenLabel htmlFor="join-ln">Last Name</HiddenLabel>
             <input id="join-ln" name="ln" placeholder="Last Name" value={form.ln} onChange={set} autoComplete="family-name" required />
-          </div>
-          <div className="form-row">
-            <label className="sr-only" htmlFor="join-loc">Location</label>
+            </FormGrid>
+            <FormGrid>
+            <HiddenLabel htmlFor="join-loc">Location</HiddenLabel>
             <input id="join-loc" name="loc" placeholder="Location" value={form.loc} onChange={set} autoComplete="address-level2" />
-            <label className="sr-only" htmlFor="join-tel">Contact Number</label>
+            <HiddenLabel htmlFor="join-tel">Contact Number</HiddenLabel>
             <input id="join-tel" name="tel" placeholder="Contact Number" value={form.tel} onChange={set} type="tel" autoComplete="tel" />
-          </div>
-          <label className="sr-only" htmlFor="join-msg">Message</label>
+            </FormGrid>
+          <HiddenLabel htmlFor="join-msg">Message</HiddenLabel>
           <textarea id="join-msg" name="msg" placeholder="Message" value={form.msg} onChange={set} rows={5} />
-          <button type="submit" className="btn btn-dark">JOIN THE CLUB</button>
-        </form>
-      </div>
-    </section>
+          <SecondaryButton type="submit">JOIN THE CLUB</SecondaryButton>
+          </Form>
+        </TwoColumnGrid>
+      </Container>
+    </JoinSection>
   );
 }

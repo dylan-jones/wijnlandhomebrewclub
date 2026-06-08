@@ -71,18 +71,6 @@ const BrewingTrack = styled.div`
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
   }
 
-  img.landscape {
-    min-height: 350px;
-    height: 350px;
-    width: auto;
-  }
-
-  img.portrait {
-    min-width: 350px;
-    width: 350px;
-    height: auto;
-  }
-
   img:nth-child(odd) {
     transform: rotate(-3deg);
   }
@@ -93,35 +81,40 @@ const BrewingTrack = styled.div`
 
   @media (max-width: 900px) {
     gap: 5rem;
-
-    img.landscape {
-      min-height: 300px;
-      height: 300px;
-    }
-
-    img.portrait {
-      min-width: 280px;
-      width: 280px;
-    }
   }
 
   @media (max-width: 640px) {
     gap: 3.2rem;
     padding: 2rem 1.2rem;
-
-    img.landscape {
-      min-height: 240px;
-      height: 240px;
-    }
-
-    img.portrait {
-      min-width: 210px;
-      width: 210px;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
     animation: none;
+  }
+`;
+
+const BrewingImage = styled.img`
+  object-fit: cover;
+  border: 4px solid var(--white);
+  flex-shrink: 0;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  min-height: ${({ $orientation }) => ($orientation === 'landscape' ? '350px' : 'auto')};
+  height: ${({ $orientation }) => ($orientation === 'landscape' ? '350px' : 'auto')};
+  min-width: ${({ $orientation }) => ($orientation === 'portrait' ? '350px' : 'auto')};
+  width: ${({ $orientation }) => ($orientation === 'portrait' ? '350px' : 'auto')};
+
+  @media (max-width: 900px) {
+    min-height: ${({ $orientation }) => ($orientation === 'landscape' ? '300px' : 'auto')};
+    height: ${({ $orientation }) => ($orientation === 'landscape' ? '300px' : 'auto')};
+    min-width: ${({ $orientation }) => ($orientation === 'portrait' ? '280px' : 'auto')};
+    width: ${({ $orientation }) => ($orientation === 'portrait' ? '280px' : 'auto')};
+  }
+
+  @media (max-width: 640px) {
+    min-height: ${({ $orientation }) => ($orientation === 'landscape' ? '240px' : 'auto')};
+    height: ${({ $orientation }) => ($orientation === 'landscape' ? '240px' : 'auto')};
+    min-width: ${({ $orientation }) => ($orientation === 'portrait' ? '210px' : 'auto')};
+    width: ${({ $orientation }) => ($orientation === 'portrait' ? '210px' : 'auto')};
   }
 `;
 
@@ -183,11 +176,11 @@ export default function WhatsBrewing() {
           {loop.map((img, i) => {
             const [w, h] = img.orientation === 'landscape' ? [500, 350] : [350, 500];
             return (
-              <img
+              <BrewingImage
                 key={`${img.seed}-${i}`}
                 src={pic(w, h, img.seed)}
                 alt=""
-                className={img.orientation}
+                $orientation={img.orientation}
                 aria-hidden={i >= BREW_IMAGES.length}
               />
             );

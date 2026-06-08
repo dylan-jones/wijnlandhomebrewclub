@@ -1,6 +1,6 @@
 ﻿import React from 'react';
-import './App.css';
 import Navbar from './components/Navbar';
+import { GlobalStyles } from './styles/GlobalStyles';
 import Hero from './sections/Hero';
 import Welcome from './sections/Welcome';
 import WhatsBrewing from './sections/WhatsBrewing';
@@ -16,6 +16,7 @@ import Footer from './sections/Footer';
 export default function App() {
   return (
     <div className="app">
+      <GlobalStyles />
       <Navbar />
       <Hero />
       <Welcome />

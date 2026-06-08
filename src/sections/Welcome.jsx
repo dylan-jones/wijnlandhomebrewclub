@@ -2,12 +2,13 @@ import React from 'react';
 import { pic } from '../utils/helpers';
 import styled from 'styled-components';
 import PrimaryButton from '../components/PrimaryButton';
+import { Container, Section } from '../styles/GlobalStyles';
 
-const WelcomeSection = styled.section`
+const WelcomeSection = styled(Section)`
   background: var(--white);
 `;
 
-const WelcomeGrid = styled.div`
+const WelcomeGrid = styled(Container)`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 5rem;
@@ -110,8 +111,8 @@ const ButtonGroup = styled.div`
 
 export default function Welcome() {
   return (
-    <WelcomeSection className="section">
-      <WelcomeGrid className="container">
+    <WelcomeSection>
+      <WelcomeGrid>
         <WelcomeText>
           <h2>WELCOME TO WIJNLAND<br />HOMEBREW CLUB</h2>
           <p>
