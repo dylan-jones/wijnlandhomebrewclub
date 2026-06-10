@@ -2,7 +2,7 @@ import React from 'react';
 import { pic } from '../utils/helpers';
 import styled from 'styled-components';
 import PrimaryButton from '../components/PrimaryButton';
-import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
+import { Container, Section, SectionTitle, BorderImage } from '../styles/GlobalStyles';
 
 const WelcomeSection = styled(Section)`
   background: var(--white);
@@ -33,35 +33,6 @@ const WelcomeText = styled.div`
       font-size: 3rem;
       line-height: 3.4rem;
     }
-  }
-`;
-
-const WelcomeImage = styled.div`
-  border: 4px solid var(--black);
-  position: relative;
-  z-index: 1;
-
-  img {
-    width: 100%;
-    object-fit: contain;
-  }
-
-  &::after {
-    content: "";
-    width: 100%;
-    height: 100%;
-    display: block;
-    background-color: var(--black);
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    transform: translate(0.8rem, 0.8rem);
-  }
-
-  @media (max-width: 900px) {
-    max-width: 640px;
-    margin: 0 auto;
   }
 `;
 
@@ -130,10 +101,10 @@ export default function Welcome() {
             </PrimaryButton>
           </ButtonGroup>
         </WelcomeText>
-        <WelcomeImage>
+        <BorderImage>
           <img src={pic(600, 480, 'craftbeer7')} alt="Craft brewing" />
           <Caption>"He was a wise man who invented beer." - PLATO</Caption>
-        </WelcomeImage>
+        </BorderImage>
       </WelcomeGrid>
     </WelcomeSection>
   );

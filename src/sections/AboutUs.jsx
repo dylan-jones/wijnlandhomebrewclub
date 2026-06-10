@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { pic } from '../utils/helpers';
-import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
+import { Container, Section, SectionTitle, BorderImage } from '../styles/GlobalStyles';
+import { GiLaurelsTrophy } from "react-icons/gi";
 
 const AboutSection = styled(Section)`
   background: var(--white);
@@ -56,21 +57,35 @@ const AboutMainImage = styled.img`
 `;
 
 const CupBadge = styled.div`
-  display: flex;
+  display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  text-align: center;
+  justify-content: center;
+  gap: 0.8rem;
   border: 2px solid var(--gold);
-  padding: 1.25rem 1.5rem;
+  padding: 1.6rem;
   background: var(--off-white);
 
-  strong {
-    display: block;
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
+  h4 {
+    font-family: var(--font-space);
+    font-size: 2rem;
+    line-height: 2.4rem;
     text-transform: uppercase;
-    margin-bottom: 0.2rem;
   }
+
+  p {
+    font-family: var(--font-space);
+    font-size: 1.4rem;
+    color: var(--text);
+  }
+`;
+
+const CupContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.6rem;
+  margin-top: 2.4rem;
 `;
 
 export default function AboutUs() {
@@ -106,17 +121,19 @@ export default function AboutUs() {
           </p>
         </AboutText>
         <AboutRight>
-          <AboutMainImage src={pic(450, 320, 'festival8')} alt="Club gathering" />
-          <CupBadge>
-            <svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="#C4973A" strokeWidth="2">
-              <path d="M12 4h16v18a8 8 0 01-16 0V4z" />
-              <path d="M8 8H4a4 4 0 004 4M32 8h4a4 4 0 01-4 4M20 30v6M14 36h12" />
-            </svg>
-            <div>
-              <strong>WF Cup Winners</strong>
-              <p>2022, 2023, 2024</p>
-            </div>
-          </CupBadge>
+          <BorderImage style={{ marginBottom: '2.4rem' }}>
+            <img src={pic(450, 320, 'festival8')} alt="Club gathering" />
+          </BorderImage>
+          <BorderImage style={{ marginBottom: '2.4rem' }}>
+            <img src={pic(450, 320, 'festival8')} alt="Club gathering" />
+          </BorderImage>
+          <CupContainer>
+            <CupBadge>
+              <GiLaurelsTrophy size={56} color="var(--gold)" />
+                <h4>WF Cup Winners</h4>
+                <p>2022, 2023, 2024</p>
+            </CupBadge>
+          </CupContainer>
         </AboutRight>
       </AboutGrid>
     </AboutSection>

@@ -6,10 +6,11 @@ import {
   FormGrid,
   HiddenLabel,
   Section,
-  SecondaryButton,
-  TextColumn,
   TwoColumnGrid,
+  TextColumn,
 } from '../styles/GlobalStyles';
+import PrimaryButton from '../components/PrimaryButton';
+
 
 const ContactSection = styled(Section)`
   background: var(--off-white);
@@ -51,7 +52,7 @@ export default function Contact() {
           </FormGrid>
           <HiddenLabel htmlFor="contact-msg">Message</HiddenLabel>
           <textarea id="contact-msg" name="msg" placeholder="Message" value={form.msg} onChange={set} rows={5} />
-          <SecondaryButton type="submit">SUBMIT</SecondaryButton>
+          <PrimaryButton type="submit" outline>SUBMIT</PrimaryButton>
         </Form>
         </TwoColumnGrid>
       </Container>

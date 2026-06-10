@@ -6,13 +6,14 @@ import {
   FormGrid,
   HiddenLabel,
   Section,
-  SecondaryButton,
+  TwoColumnGrid,  
+  SectionTitle,
   TextColumn,
-  TwoColumnGrid,
 } from '../styles/GlobalStyles';
+import PrimaryButton from '../components/PrimaryButton';
 
 const JoinSection = styled(Section)`
-  background: var(--white);
+  background: var(--black);
 `;
 
 export default function JoinForm() {
@@ -28,17 +29,14 @@ export default function JoinForm() {
       <Container>
         <TwoColumnGrid>
           <TextColumn>
-          <h2>INTERESTED IN JOINING?</h2>
-          <p>
-            Ready to see what's on tap? Whether you're a seasoned pro or a first-timer, we
-            welcome you with a warm pint and open arms. Fill in the form to stay updated on
-            meetings, events, and everything Wijnland.
-          </p>
-          <p>
-            Come through to our next meeting to see what we're all about, meet the members,
-            discuss all things fermented and maybe enjoy a cold one.
-          </p>
-          <p>Fill out this form and we'll get back to you soon.</p>
+            <SectionTitle style={{color: 'var(--white)'}}>INTERESTED IN JOINING?</SectionTitle>
+            <p>
+              Ready to see what’s on tap? Whether you’re a seasoned pro with a dedicated brew-shed or you're just starting out with your first plastic bucket, there’s a place for you here.
+            </p>
+            <p>
+              Come through to our next meeting to see what we’re about, or sign up today to become an official member and join the Winelands’ finest collective of fermenters.
+            </p>
+            <p>For information, fill in the form and we’ll get back to you asap.</p>
           </TextColumn>
           <Form onSubmit={submit}>
             <FormGrid>
@@ -55,7 +53,7 @@ export default function JoinForm() {
             </FormGrid>
           <HiddenLabel htmlFor="join-msg">Message</HiddenLabel>
           <textarea id="join-msg" name="msg" placeholder="Message" value={form.msg} onChange={set} rows={5} />
-          <SecondaryButton type="submit">JOIN THE CLUB</SecondaryButton>
+          <PrimaryButton type="submit" outline>Submit</PrimaryButton>
           </Form>
         </TwoColumnGrid>
       </Container>

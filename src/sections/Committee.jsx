@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
 
 const CommitteeSection = styled(Section)`
-  background: var(--light-gray);
 `;
 
 const CommitteeGrid = styled.div`
@@ -21,33 +20,30 @@ const CommitteeGrid = styled.div`
 `;
 
 const CommitteeCard = styled.div`
-  background: var(--white);
-  border: 1px solid var(--mid-gray);
-  padding: 2.5rem 2rem;
-  text-align: center;
+  background: var(--mid-gray);
+  border: 3px solid var(--black);
+  padding: 2.4rem;
 
   h4 {
-    font-family: 'Oswald', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 1.5px;
+    font-family: var(--font-space);
+    font-size: 2.4rem;
     text-transform: uppercase;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.8rem;
   }
 `;
 
 const MemberAvatar = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.6rem;
+  background: var(--white);
+  border: 1px solid var(--black);
+  height: 26rem;
 `;
 
 const MemberMeta = styled.p`
-  font-size: 0.78rem;
-  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.8rem;
 
   span {
     color: var(--text);
@@ -56,19 +52,10 @@ const MemberMeta = styled.p`
 `;
 
 const committeeData = [
-  { name: 'NAME SURNAME', style: 'IPA', arc: '234' },
-  { name: 'NAME SURNAME', style: 'Stout', arc: '456' },
-  { name: 'NAME SURNAME', style: 'Lager', arc: '789' },
+  { name: 'NAME SURNAME', image: 'path/to/image.jpg', style: 'IPA', arc: '234' },
+  { name: 'NAME SURNAME', image: 'path/to/image.jpg', style: 'Stout', arc: '456' },
+  { name: 'NAME SURNAME', image: 'path/to/image.jpg', style: 'Lager', arc: '789' },
 ];
-
-function SilhouetteAvatar() {
-  return (
-    <svg viewBox="0 0 100 120" width="90" height="110">
-      <ellipse cx="50" cy="35" rx="22" ry="26" fill="#2a2a2a" />
-      <path d="M10 120 Q10 75 50 75 Q90 75 90 120Z" fill="#2a2a2a" />
-    </svg>
-  );
-}
 
 export default function Committee() {
   return (
@@ -76,12 +63,12 @@ export default function Committee() {
       <Container>
         <SectionTitle>THE COMMITTEE</SectionTitle>
         <CommitteeGrid>
-          {committeeData.map((m) => (
+          {committeeData.map((m) => ( 
             <CommitteeCard key={`${m.name}-${m.style}-${m.arc}`}>
-              <MemberAvatar><SilhouetteAvatar /></MemberAvatar>
+              <MemberAvatar><img src={m.image} alt={m.name} /></MemberAvatar>
               <h4>{m.name}</h4>
+              <MemberMeta>Role</MemberMeta>
               <MemberMeta>FAV. STYLE &nbsp;<span>{m.style}</span></MemberMeta>
-              <MemberMeta>ARC &nbsp;<span>{m.arc}</span></MemberMeta>
             </CommitteeCard>
           ))}
         </CommitteeGrid>
