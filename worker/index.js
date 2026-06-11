@@ -130,6 +130,10 @@ export default {
       return json({ ok: false, error: "Method Not Allowed" }, { status: 405 });
     }
 
+    if (url.pathname === "/api/calendar-key") {
+      return json({ key: env.VITE_GOOGLE_CALENDAR_API_KEY || "" });
+    }
+
     if (env?.ASSETS && typeof env.ASSETS.fetch === "function") {
       return env.ASSETS.fetch(request);
     }

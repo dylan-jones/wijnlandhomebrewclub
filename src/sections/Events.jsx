@@ -83,7 +83,6 @@ const EventDescription = styled.p`
 `;
 
 const CALENDAR_ID = 'fa7408367d1882778e4b1ff18d5a1d498c3c39e4743b91c9448b41c25475832d@group.calendar.google.com';
-const API_KEY = import.meta.env.VITE_GOOGLE_CALENDAR_API_KEY;
 
 function formatDate(start) {
   const date = start.dateTime ? new Date(start.dateTime) : new Date(start.date + 'T00:00:00');
@@ -108,15 +107,20 @@ export default function Events() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const now = new Date().toISOString();
-    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events?key=${API_KEY}&orderBy=startTime&singleEvents=true&timeMin=${encodeURIComponent(now)}&maxResults=6`;
+    const fetchEvents = async () => {
+      try {
+        const keyResponse = await fetch('/api/calendar-key');
+        const { key } = await keyResponse.json();
 
-    fetch(url)
-      .then(res => {
+        if (!key) throw new Error('Calendar API key not available');
+
+        const now = new Date().toISOString();
+        const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events?key=${key}&orderBy=startTime&singleEvents=true&timeMin=${encodeURIComponent(now)}&maxResults=6`;
+
+        const res = await fetch(url);
         if (!res.ok) throw new Error(`Calendar API error ${res.status}`);
-        return res.json();
-      })
-      .then(data => {
+        
+        const data = await res.json();
         const mapped = (data.items || []).map(ev => {
           const { address, city } = parseLocation(ev.location);
           const { day, month } = formatDate(ev.start);
@@ -130,9 +134,14 @@ export default function Events() {
           };
         });
         setEvents(mapped);
-      })
-      .catch(err => setError(err.message))
-      .finally(() => setLoading(false));
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
   }, []);
 
   return (
