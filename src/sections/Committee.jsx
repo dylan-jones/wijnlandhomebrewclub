@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
+import { COMMITTEE_IMAGES } from '../constants/images';
 
 const CommitteeSection = styled(Section)`
 `;
@@ -39,6 +40,12 @@ const MemberAvatar = styled.div`
   background: var(--white);
   border: 1px solid var(--black);
   height: 26rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const MemberMeta = styled.p`
@@ -52,9 +59,9 @@ const MemberMeta = styled.p`
 `;
 
 const committeeData = [
-  { name: 'NAME SURNAME', image: 'path/to/image.jpg', style: 'IPA', arc: '234' },
-  { name: 'NAME SURNAME', image: 'path/to/image.jpg', style: 'Stout', arc: '456' },
-  { name: 'NAME SURNAME', image: 'path/to/image.jpg', style: 'Lager', arc: '789' },
+  { name: 'NAME SURNAME', image: COMMITTEE_IMAGES[0], style: 'IPA', arc: '234' },
+  { name: 'NAME SURNAME', image: COMMITTEE_IMAGES[1], style: 'Stout', arc: '456' },
+  { name: 'NAME SURNAME', image: COMMITTEE_IMAGES[2], style: 'Lager', arc: '789' },
 ];
 
 export default function Committee() {
@@ -65,7 +72,9 @@ export default function Committee() {
         <CommitteeGrid>
           {committeeData.map((m) => ( 
             <CommitteeCard key={`${m.name}-${m.style}-${m.arc}`}>
-              <MemberAvatar><img src={m.image} alt={m.name} /></MemberAvatar>
+              <MemberAvatar>
+                <img src={m.image} alt={m.name} />
+              </MemberAvatar>
               <h4>{m.name}</h4>
               <MemberMeta>Role</MemberMeta>
               <MemberMeta>FAV. STYLE &nbsp;<span>{m.style}</span></MemberMeta>

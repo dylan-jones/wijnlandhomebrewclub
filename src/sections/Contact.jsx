@@ -8,12 +8,31 @@ import {
   Section,
   TwoColumnGrid,
   TextColumn,
+  SectionTitle,
 } from '../styles/GlobalStyles';
 import PrimaryButton from '../components/PrimaryButton';
-
+import backgroundImage from '../assets/contact-bg.jpg';
 
 const ContactSection = styled(Section)`
   background: var(--off-white);
+  background-image: url(${backgroundImage});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-top: 4px solid var(--black);
+  margin-top: 0.4rem;
+  position: relative;
+
+  &:before {
+    content: '';
+    width: 100%;
+    height: 0.2rem;
+    background: var(--black);
+    display: block;
+    position: absolute;
+    top: -1rem;
+    left: 0;
+  }
 `;
 
 export default function Contact() {
@@ -28,14 +47,14 @@ export default function Contact() {
     <ContactSection id="contact">
       <Container>
         <TwoColumnGrid>
-          <TextColumn>
-          <h2>CONTACT US</h2>
-          <p>
-            Have a question, feedback, or just want to say hi? We'd love to hear from you.
-            Drop us a message and one of our committee members will get back to you as soon
-            as possible.
-          </p>
-          <p>Fill out this form and we'll get back to you soon.</p>
+          <TextColumn style={{ color: 'var(--black)' }}>
+            <SectionTitle>CONTACT US</SectionTitle>
+            <p>
+              Have a question, feedback, or just want to say hi? We'd love to hear from you.
+              Drop us a message and one of our committee members will get back to you as soon
+              as possible.
+            </p>
+            <p>Fill out this form and we'll get back to you soon.</p>
           </TextColumn>
         <Form onSubmit={submit}>
           <FormGrid>
@@ -52,7 +71,7 @@ export default function Contact() {
           </FormGrid>
           <HiddenLabel htmlFor="contact-msg">Message</HiddenLabel>
           <textarea id="contact-msg" name="msg" placeholder="Message" value={form.msg} onChange={set} rows={5} />
-          <PrimaryButton type="submit" outline>SUBMIT</PrimaryButton>
+          <PrimaryButton type="submit">SUBMIT</PrimaryButton>
         </Form>
         </TwoColumnGrid>
       </Container>

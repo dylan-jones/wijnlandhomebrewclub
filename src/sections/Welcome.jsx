@@ -1,5 +1,5 @@
 import React from 'react';
-import { pic } from '../utils/helpers';
+import { WELCOME_IMAGE } from '../constants/images';
 import styled from 'styled-components';
 import PrimaryButton from '../components/PrimaryButton';
 import { Container, Section, SectionTitle, BorderImage } from '../styles/GlobalStyles';
@@ -102,7 +102,7 @@ export default function Welcome() {
           </ButtonGroup>
         </WelcomeText>
         <BorderImage>
-          <img src={pic(600, 480, 'craftbeer7')} alt="Craft brewing" />
+          <img src={WELCOME_IMAGE} alt="Craft brewing" />
           <Caption>"He was a wise man who invented beer." - PLATO</Caption>
         </BorderImage>
       </WelcomeGrid>

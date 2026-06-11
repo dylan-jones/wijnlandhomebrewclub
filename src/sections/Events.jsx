@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { pic } from '../utils/helpers';
 import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
 
 const EventsSection = styled(Section)`
-  background: var(--light-gray);
+  background-color: var(--off-white);
 `;
 
 const EventsGrid = styled.ul`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 1rem;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
@@ -19,45 +23,63 @@ const EventsGrid = styled.ul`
 
 const EventCard = styled.li`
   background: var(--white);
-  display: flex;
+  display: grid;
+  grid-template-rows: auto 1fr;
   border: 1px solid var(--mid-gray);
+  border-radius: 8px;
   overflow: hidden;
+  min-height: 220px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 `;
 
-const EventImage = styled.img`
-  width: 140px;
-  min-height: 160px;
-  flex-shrink: 0;
-  object-fit: cover;
+const EventDate = styled.div`
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  padding: 1.6rem;
+  border-bottom: 1px solid var(--mid-gray);
+  background: var(--light-gray);
+`;
+
+const EventDateDay = styled.span`
+  font-family: var(--font-space);
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1;
+`;
+
+const EventDateMonth = styled.span`
+  font-family: var(--font-space);
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
 `;
 
 const EventDetails = styled.div`
-  padding: 1.25rem;
-  flex: 1;
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
 
   h4 {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.95rem;
+    font-family: var(--font-space);
+    font-size: 1.6rem;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
   }
 `;
 
 const EventMeta = styled.p`
-  font-size: 0.75rem;
+  font-size: 1.6rem;
+  line-height: 2rem;
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  line-height: 1.9;
 `;
 
 const EventDescription = styled.p`
-  font-size: 0.8rem;
+  font-size: 1.6rem;
   color: var(--text);
   line-height: 1.55;
-  margin-top: 0.6rem;
+  margin-top: 0.7rem;
 `;
 
 const CALENDAR_ID = 'fa7408367d1882778e4b1ff18d5a1d498c3c39e4743b91c9448b41c25475832d@group.calendar.google.com';
@@ -65,7 +87,10 @@ const API_KEY = import.meta.env.VITE_GOOGLE_CALENDAR_API_KEY;
 
 function formatDate(start) {
   const date = start.dateTime ? new Date(start.dateTime) : new Date(start.date + 'T00:00:00');
-  return date.toLocaleDateString('en-ZA', { day: '2-digit', month: 'short' }).toUpperCase();
+  return {
+    day: date.toLocaleDateString('en-ZA', { day: '2-digit' }),
+    month: date.toLocaleDateString('en-ZA', { month: 'short' }).toUpperCase(),
+  };
 }
 
 function parseLocation(location = '') {
@@ -94,9 +119,11 @@ export default function Events() {
       .then(data => {
         const mapped = (data.items || []).map(ev => {
           const { address, city } = parseLocation(ev.location);
+          const { day, month } = formatDate(ev.start);
           return {
             name: ev.summary || 'Untitled Event',
-            date: formatDate(ev.start),
+            day,
+            month,
             address,
             city,
             desc: ev.description || '',
@@ -119,13 +146,14 @@ export default function Events() {
         )}
         <EventsGrid aria-label="Upcoming events">
           {events.map((ev) => (
-            <EventCard key={`${ev.name}-${ev.date}-${ev.address || 'n-a'}-${ev.city || 'n-a'}-${ev.desc || 'n-a'}`}>
-              <EventImage src={pic(150, 160, `${ev.name}-${ev.date}`)} alt={ev.name} />
+            <EventCard key={`${ev.name}-${ev.day}-${ev.month}-${ev.address || 'n-a'}-${ev.city || 'n-a'}-${ev.desc || 'n-a'}`}>
+              <EventDate>
+                <EventDateDay>{ev.day}</EventDateDay>
+                <EventDateMonth>{ev.month}</EventDateMonth>
+              </EventDate>
               <EventDetails>
                 <h4>{ev.name}</h4>
-                <EventMeta>{ev.date}</EventMeta>
                 {ev.address && <EventMeta>{ev.address}</EventMeta>}
-                {ev.city && <EventMeta>{ev.city}</EventMeta>}
                 {ev.desc && <EventDescription>{ev.desc}</EventDescription>}
               </EventDetails>
             </EventCard>

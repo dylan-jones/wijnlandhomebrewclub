@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { pic } from '../utils/helpers';
+import { ABOUT_IMAGES } from '../constants/images';
 import { Container, Section, SectionTitle, BorderImage } from '../styles/GlobalStyles';
 import { GiLaurelsTrophy } from "react-icons/gi";
 
@@ -122,10 +122,10 @@ export default function AboutUs() {
         </AboutText>
         <AboutRight>
           <BorderImage style={{ marginBottom: '2.4rem' }}>
-            <img src={pic(450, 320, 'festival8')} alt="Club gathering" />
+            <img src={ABOUT_IMAGES[0]} alt="Club gathering" />
           </BorderImage>
           <BorderImage style={{ marginBottom: '2.4rem' }}>
-            <img src={pic(450, 320, 'festival8')} alt="Club gathering" />
+            <img src={ABOUT_IMAGES[1]} alt="Club gathering" />
           </BorderImage>
           <CupContainer>
             <CupBadge>

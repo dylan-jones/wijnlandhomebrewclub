@@ -150,17 +150,22 @@ export const Form = styled.form`
   textarea {
     width: 100%;
     padding: 0.8rem 1.6rem;
-    border: 1px solid #656565;
+    border: 2px solid var(--black);
     font-size: 1.6rem;
     background: var(--white);
     color: var(--black);
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s ease-in;
     border-radius: 0;
     appearance: none;
     min-height: 5.6rem;
     font-family: var(--font-work);
     font-weight: 500;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text-muted);
   }
 
   input:focus,

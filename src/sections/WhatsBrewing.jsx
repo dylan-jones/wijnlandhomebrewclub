@@ -1,18 +1,7 @@
 import React from 'react';
-import { pic } from '../utils/helpers';
+import { BREWING_IMAGES } from '../constants/images';
 import styled, { keyframes } from 'styled-components';
 import PrimaryButton from '../components/PrimaryButton';
-
-const BREW_IMAGES = [
-  { seed: 'beer11', orientation: 'portrait' },
-  { seed: 'beer22', orientation: 'landscape' },
-  { seed: 'beer33', orientation: 'portrait' },
-  { seed: 'beer44', orientation: 'landscape' },
-  { seed: 'beer55', orientation: 'portrait' },
-  { seed: 'beer66', orientation: 'landscape' },
-  { seed: 'beer77', orientation: 'portrait' },
-  { seed: 'beer88', orientation: 'landscape' },
-];
 
 const BrewingSection = styled.section`
   position: relative;
@@ -162,7 +151,7 @@ const BrewingCard = styled.div`
 `;
 
 export default function WhatsBrewing() {
-  const loop = [...BREW_IMAGES, ...BREW_IMAGES];
+  const loop = [...BREWING_IMAGES, ...BREWING_IMAGES];
 
   return (
     <BrewingSection id="whats-brewing">
@@ -173,18 +162,15 @@ export default function WhatsBrewing() {
       </BrewingCard>
       <BrewingViewport>
         <BrewingTrack>
-          {loop.map((img, i) => {
-            const [w, h] = img.orientation === 'landscape' ? [500, 350] : [350, 500];
-            return (
-              <BrewingImage
-                key={`${img.seed}-${i}`}
-                src={pic(w, h, img.seed)}
-                alt=""
-                $orientation={img.orientation}
-                aria-hidden={i >= BREW_IMAGES.length}
-              />
-            );
-          })}
+          {loop.map((img, i) => (
+            <BrewingImage
+              key={`${img.url}-${i}`}
+              src={img.url}
+              alt=""
+              $orientation={img.orientation}
+              aria-hidden={i >= BREWING_IMAGES.length}
+            />
+          ))}
         </BrewingTrack>
       </BrewingViewport>
     </BrewingSection>

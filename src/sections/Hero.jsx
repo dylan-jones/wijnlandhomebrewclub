@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ClubLogo from '../assets/logo.svg';
-import { pic } from '../utils/helpers';
+import { HERO_IMAGE } from '../constants/images';
 
 const HeroSection = styled.section`
   height: 88vh;
@@ -26,7 +26,7 @@ const Overlay = styled.div`
 
 export default function Hero() {
   return (
-    <HeroSection id="home" style={{ backgroundImage: `url(${pic(1400, 800, 'friends42')})` }}>
+    <HeroSection id="home" style={{ backgroundImage: `url(${HERO_IMAGE})` }}>
       <Overlay>
         <img src={ClubLogo} alt="Wijnland Homebrew Club" />
       </Overlay>

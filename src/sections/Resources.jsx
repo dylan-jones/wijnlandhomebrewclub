@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
 
 const ResourcesSection = styled(Section)`
-  background: var(--light-gray);
 `;
 
 const ResourcesGrid = styled.div`
@@ -17,8 +16,8 @@ const ResourcesGrid = styled.div`
 `;
 
 const ResourceCard = styled.div`
-  background: var(--white);
-  border: 1px solid var(--mid-gray);
+  background: var(--off-white);
+  border: 3px solid var(--black);
   padding: 2rem 1.5rem;
   text-align: center;
   display: flex;
@@ -28,24 +27,25 @@ const ResourceCard = styled.div`
 `;
 
 const ResourceName = styled.p`
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-family: var(--font-space);
+  font-size: 2.4rem;
+  font-weight: bold;
   text-transform: uppercase;
-  letter-spacing: 1px;
   color: var(--text);
 `;
 
-const ResourceButton = styled.button`
-  font-size: 0.75rem;
+const ResourceSize = styled.p`
+  font-size: 1.6rem;
+`;
+
+const ResourceButton = styled.a`
+  display: inline-block;
+  font-size: 1.6rem;
   color: var(--gold);
   text-transform: uppercase;
-  letter-spacing: 1px;
   background: transparent;
   border: 0;
   cursor: pointer;
-  border-bottom: 1px solid var(--gold);
-  padding-bottom: 1px;
   transition: color 0.2s;
 
   &:hover {
@@ -55,10 +55,26 @@ const ResourceButton = styled.button`
 `;
 
 const resourcesData = [
-  'Brew Day Guide',
-  'Competition Rules',
-  'Style Guidelines',
-  'Membership Form',
+  {
+    name: 'Brew Day Guide',
+    fileSize: '1.2 MB',
+    url: '/resources/brew-day-guide.pdf',
+  },
+  {
+    name: 'Competition Rules',
+    fileSize: '860 KB',
+    url: '/resources/competition-rules.pdf',
+  },
+  {
+    name: 'Style Guidelines',
+    fileSize: '2.1 MB',
+    url: '/resources/style-guidelines.pdf',
+  },
+  {
+    name: 'Membership Form',
+    fileSize: '540 KB',
+    url: '/resources/membership-form.pdf',
+  },
 ];
 
 function PdfIcon() {
@@ -78,11 +94,14 @@ export default function Resources() {
       <Container>
         <SectionTitle>RESOURCES</SectionTitle>
         <ResourcesGrid>
-          {resourcesData.map((name) => (
-            <ResourceCard key={name}>
+          {resourcesData.map((resource) => (
+            <ResourceCard key={resource.name}>
               <PdfIcon />
-              <ResourceName>{name}</ResourceName>
-              <ResourceButton type="button">VIEW / DOWNLOAD</ResourceButton>
+              <ResourceName>{resource.name}</ResourceName>
+              <ResourceSize>{resource.fileSize}</ResourceSize>
+              <ResourceButton href={resource.url} target="_blank" rel="noopener noreferrer">
+                DOWNLOAD
+              </ResourceButton>
             </ResourceCard>
           ))}
         </ResourcesGrid>
