@@ -13,25 +13,49 @@ function isEmail(value) {
   return typeof value === "string" && /.+@.+\..+/.test(value);
 }
 
+async function parsePayload(request) {
+  const contentType = request.headers.get("content-type") || "";
+
+  if (contentType.includes("application/json")) {
+    return request.json();
+  }
+
+  if (contentType.includes("application/x-www-form-urlencoded") || contentType.includes("multipart/form-data")) {
+    const formData = await request.formData();
+    return Object.fromEntries(formData.entries());
+  }
+
+  const textBody = await request.text();
+  if (!textBody) {
+    return {};
+  }
+
+  try {
+    return JSON.parse(textBody);
+  } catch {
+    return {};
+  }
+}
+
 async function handleContact(request, env) {
   let payload;
 
   try {
-    payload = await request.json();
+    payload = await parsePayload(request);
   } catch {
-    return json({ ok: false, error: "Invalid JSON body." }, { status: 400 });
+    return json({ ok: false, error: "Could not parse request body." }, { status: 400 });
   }
 
-  const firstName = String(payload?.fn || "").trim();
-  const lastName = String(payload?.ln || "").trim();
-  const location = String(payload?.loc || "").trim();
-  const phone = String(payload?.tel || "").trim();
-  const message = String(payload?.msg || "").trim();
+  const firstName = String(payload?.fn ?? payload?.firstName ?? "").trim();
+  const lastName = String(payload?.ln ?? payload?.lastName ?? "").trim();
+  const location = String(payload?.loc ?? payload?.location ?? "").trim();
+  const phone = String(payload?.tel ?? payload?.phone ?? "").trim();
+  const message = String(payload?.msg ?? payload?.message ?? "").trim();
 
   if (!firstName || !lastName || !message) {
     return json(
       { ok: false, error: "First name, last name, and message are required." },
-      { status: 400 }
+      { status: 422 }
     );
   }
 
@@ -76,7 +100,6 @@ async function handleContact(request, env) {
       to: [toEmail],
       subject: `Contact message from ${firstName} ${lastName}`,
       text,
-      reply_to: [],
     }),
   });
 
@@ -99,8 +122,12 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    if (request.method === "POST" && url.pathname === "/api/contact") {
-      return handleContact(request, env);
+    if (url.pathname === "/api/contact") {
+      if (request.method === "POST") {
+        return handleContact(request, env);
+      }
+
+      return json({ ok: false, error: "Method Not Allowed" }, { status: 405 });
     }
 
     if (env?.ASSETS && typeof env.ASSETS.fetch === "function") {
