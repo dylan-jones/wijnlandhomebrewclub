@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import PrimaryButton from "./PrimaryButton";
 import { Container } from "../styles/GlobalStyles";
+import Logo from "../assets/logo";
 
 const Nav = styled.nav`
   background: var(--white);
@@ -81,10 +82,32 @@ const Hamburger = styled.button`
 `;
 
 const LogoText = styled.span`
-  font-family: var(--font-bebas);
-  font-size: var(--header-font-size-lg);
-  color: var(--black);
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  span {
+    display: flex;
+    margin-top: 0.8rem;
+    font-family: var(--font-bebas);
+    font-size: var(--header-font-size-lg);
+    color: var(--black);
+    line-height: 1;
+  }
+`;
+
+const LogoSvg = styled.div`
+  display: flex;
+  width: 5rem;
+  height: auto;
+  opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
+  transform: ${({ $isVisible }) => ($isVisible ? 'translateX(0)' : 'translateX(-30px)')};
+  transition: opacity 0.6s ease, transform 0.6s ease;
+
+  svg {
+    width: 100%;
+    height: auto;
+  }
 `;
 
 const JoinCtaWrap = styled.div`
@@ -95,10 +118,29 @@ const JoinCtaWrap = styled.div`
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [logoVisible, setLogoVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setLogoVisible(true);
+      } else {
+        setLogoVisible(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   return (
     <Nav>
       <NavInner>
-        <LogoText>WIJNLAND HOMEBREW CLUB</LogoText>
+        <LogoText>
+          <LogoSvg $isVisible={logoVisible}>
+            <Logo />
+          </LogoSvg>
+          <span>WIJNLAND HOMEBREW CLUB</span>
+        </LogoText>
         <Hamburger
           onClick={() => setOpen(!open)}
           aria-label="Menu"

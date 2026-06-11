@@ -25,7 +25,6 @@ export const GALLERY_IMAGES = [
   'https://images.unsplash.com/photo-1618885472179-5e474019f2a9?auto=format&fit=crop&w=400&h=460&q=80',
   'https://images.unsplash.com/photo-1584225064785-c62a8b43d148?auto=format&fit=crop&w=400&h=320&q=80',
   'https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=400&h=580&q=80',
-  'https://images.unsplash.com/photo-1514361892635-eae31ecf2d3d?auto=format&fit=crop&w=400&h=300&q=80',
   'https://images.unsplash.com/photo-1436076863939-06870fe779c2?auto=format&fit=crop&w=400&h=500&q=80',
   'https://images.unsplash.com/photo-1485265449635-ca623a55e95c?auto=format&fit=crop&w=400&h=440&q=80',
 ];
