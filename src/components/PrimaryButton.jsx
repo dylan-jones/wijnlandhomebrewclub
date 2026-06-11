@@ -22,6 +22,11 @@ const buttonStyles = css`
   text-decoration: none;
   box-sizing: border-box;
 
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
   &::after {
     transition: transform 0.3s ease;
     content: "";
@@ -56,7 +61,7 @@ const Anchor = styled.a`
   ${buttonStyles}
 `;
 
-const PrimaryButton = ({ children, onClick, outline, href }) => {
+const PrimaryButton = ({ children, onClick, outline, href, type = "button", disabled = false }) => {
   if (href) {
     const handleClick = (e) => {
       if (href.startsWith("#")) {
@@ -80,7 +85,7 @@ const PrimaryButton = ({ children, onClick, outline, href }) => {
   }
 
   return (
-    <Button onClick={onClick} $outline={outline}>
+    <Button onClick={onClick} $outline={outline} type={type} disabled={disabled}>
       {children}
     </Button>
   );
