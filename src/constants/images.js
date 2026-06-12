@@ -4,7 +4,7 @@
  * with local asset paths (e.g., /assets/hero.jpg) in the future.
  */
 
-export const HERO_IMAGE = 'https://images.unsplash.com/photo-1575037614876-c38a4d44f5b8?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+export const HERO_IMAGE = '/images/HERO_01.jpg';
 
 export const WELCOME_IMAGE = 'https://images.unsplash.com/photo-1436076863939-06870fe779c2?auto=format&fit=crop&w=600&h=480&q=80';
 
