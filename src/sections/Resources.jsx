@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
+import { Container, Section, SectionTitle, DeviderLine } from '../styles/GlobalStyles';
 import { RiFile4Fill } from "react-icons/ri";
 
 const ResourcesSection = styled(Section)`
   background: var(--white);
   position: relative;
   z-index: 1;
+  padding-top: 0;
 `;
 
 const ResourcesGrid = styled.div`
@@ -94,6 +95,7 @@ export default function Resources() {
   return (
     <ResourcesSection id="resources">
       <Container>
+        <DeviderLine />
         <SectionTitle>RESOURCES</SectionTitle>
         <ResourcesGrid>
           {resourcesData.map((resource) => (

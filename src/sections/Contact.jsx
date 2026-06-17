@@ -21,18 +21,19 @@ const ContactSection = styled(Section)`
   background-position: center;
   background-repeat: no-repeat;
   border-top: 4px solid var(--black);
-  margin-top: 0.4rem;
   position: relative;
 
   &:before {
     content: '';
     width: 100%;
-    height: 0.2rem;
-    background: var(--black);
+    height: 0.6rem;
+    border-top: 2px solid var(--black);
+    background: var(--white);
     display: block;
     position: absolute;
     top: -1rem;
     left: 0;
+    z-index: 1;
   }
 `;
 

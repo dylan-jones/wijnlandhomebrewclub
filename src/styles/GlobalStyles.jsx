@@ -99,12 +99,12 @@ export const Container = styled.div`
 `;
 
 export const SectionTitle = styled.h2`
-    font-family: var(--font-space);
+  font-family: var(--font-space);
   font-size: 3.6rem;
   line-height: 4.2rem;
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: 2.4rem;
+  margin-bottom: 3.2rem;
 `;
 
 export const TwoColumnGrid = styled.div`
@@ -176,6 +176,14 @@ export const Form = styled.form`
   textarea {
     min-height: 13rem;
   }
+`;
+
+export const DeviderLine = styled.div`
+  width: 100%;
+  height: 0.1rem;
+  background: var(--black);
+  display: block;
+  margin-bottom: 6rem;
 `;
 
 export const SecondaryButton = styled.button`

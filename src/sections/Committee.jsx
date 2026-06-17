@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
+import { Container, Section, SectionTitle, DeviderLine } from '../styles/GlobalStyles';
 import { COMMITTEE_IMAGES } from '../constants/images';
 
 const CommitteeSection = styled(Section)`
-  background: var(--off-white);
+  background: var(--white);
   position: relative;
   z-index: 1;
+  padding-top: 0;
 `;
 
 const CommitteeGrid = styled.div`
@@ -71,6 +72,7 @@ export default function Committee() {
   return (
     <CommitteeSection id="committee">
       <Container>
+        <DeviderLine />
         <SectionTitle>THE COMMITTEE</SectionTitle>
         <CommitteeGrid>
           {committeeData.map((m) => ( 
