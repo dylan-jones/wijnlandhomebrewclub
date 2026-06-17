@@ -27,3 +27,18 @@ Local note:
 
 - `npm run dev` runs the Vite-only dev server and will not include worker routes.
 - Use `npm run preview` to test the contact API locally through Wrangler.
+
+## Google Calendar events setup
+
+The events section reads from a Google Calendar and needs a Calendar API key.
+
+Two supported setups:
+
+- Local Vite dev: set `VITE_GOOGLE_CALENDAR_API_KEY` in `.env`.
+- Cloudflare worker/runtime: set `GOOGLE_CALENDAR_API_KEY` as a Wrangler secret. The frontend fetches it from `/api/calendar-key`.
+
+Set worker secret with Wrangler:
+
+```bash
+npx wrangler secret put GOOGLE_CALENDAR_API_KEY
+```

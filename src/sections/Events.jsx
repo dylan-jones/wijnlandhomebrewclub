@@ -86,6 +86,26 @@ const EventDescription = styled.p`
 
 const CALENDAR_ID = 'fa7408367d1882778e4b1ff18d5a1d498c3c39e4743b91c9448b41c25475832d@group.calendar.google.com';
 
+async function getCalendarApiKey() {
+  const localKey = import.meta.env.VITE_GOOGLE_CALENDAR_API_KEY;
+  if (typeof localKey === 'string' && localKey.trim()) {
+    return localKey.trim();
+  }
+
+  const keyResponse = await fetch('/api/calendar-key');
+  if (!keyResponse.ok) {
+    throw new Error(`Calendar key endpoint error ${keyResponse.status}`);
+  }
+
+  const payload = await keyResponse.json();
+  const key = typeof payload?.key === 'string' ? payload.key.trim() : '';
+  if (!key) {
+    throw new Error('Calendar API key not available');
+  }
+
+  return key;
+}
+
 function formatDate(start) {
   const date = start.dateTime ? new Date(start.dateTime) : new Date(start.date + 'T00:00:00');
   return {
@@ -103,6 +123,27 @@ function parseLocation(location = '') {
   return { address, city };
 }
 
+async function fetchCalendarEvents(key) {
+  const now = new Date().toISOString();
+  const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events?key=${key}&orderBy=startTime&singleEvents=true&timeMin=${encodeURIComponent(now)}&maxResults=6`;
+
+  const res = await fetch(url);
+  if (!res.ok) {
+    let details = '';
+    try {
+      const payload = await res.json();
+      details = payload?.error?.message || '';
+    } catch {
+      details = '';
+    }
+
+    const suffix = details ? `: ${details}` : '';
+    throw new Error(`Calendar API error ${res.status}${suffix}`);
+  }
+
+  return res.json();
+}
+
 export default function Events() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -111,19 +152,10 @@ export default function Events() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const keyResponse = await fetch('/api/calendar-key');
-        const { key } = await keyResponse.json();
+        const key = await getCalendarApiKey();
 
-        if (!key) throw new Error('Calendar API key not available');
-
-        const now = new Date().toISOString();
-        const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events?key=${key}&orderBy=startTime&singleEvents=true&timeMin=${encodeURIComponent(now)}&maxResults=6`;
-
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`Calendar API error ${res.status}`);
-        
-        const data = await res.json();
-        const mapped = (data.items || []).map(ev => {
+        const data = await fetchCalendarEvents(key);
+        const mapped = (data.items || []).filter(ev => ev?.start).map(ev => {
           const { address, city } = parseLocation(ev.location);
           const { day, month } = formatDate(ev.start);
           return {
@@ -137,7 +169,9 @@ export default function Events() {
         });
         setEvents(mapped);
       } catch (err) {
-        setError(err.message);
+        const message = err instanceof Error ? err.message : 'Could not load events.';
+        setError(message);
+        console.error('Failed to load calendar events:', err);
       } finally {
         setLoading(false);
       }
@@ -151,7 +185,7 @@ export default function Events() {
       <Container>
         <SectionTitle>UPCOMING EVENTS</SectionTitle>
         {loading && <EventMeta aria-live="polite">Loading events...</EventMeta>}
-        {error && <EventMeta role="alert">Could not load events.</EventMeta>}
+        {error && <EventMeta role="alert">Could not load events. {error}</EventMeta>}
         {!loading && !error && events.length === 0 && (
           <EventMeta>No upcoming events scheduled.</EventMeta>
         )}

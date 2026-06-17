@@ -154,6 +154,19 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    if (url.pathname === "/api/calendar-key") {
+      if (request.method !== "GET") {
+        return json({ ok: false, error: "Method Not Allowed" }, { status: 405 });
+      }
+
+      const key = String(env.GOOGLE_CALENDAR_API_KEY || "").trim();
+      if (!key) {
+        return json({ ok: false, error: "Calendar API key is not configured." }, { status: 500 });
+      }
+
+      return json({ ok: true, key }, { status: 200 });
+    }
+
     if (url.pathname === "/api/contact") {
       if (request.method === "POST") {
         return handleContact(request, env);
