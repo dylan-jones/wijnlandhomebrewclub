@@ -4,6 +4,9 @@ import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
 import { COMMITTEE_IMAGES } from '../constants/images';
 
 const CommitteeSection = styled(Section)`
+  background: var(--off-white);
+  position: relative;
+  z-index: 1;
 `;
 
 const CommitteeGrid = styled.div`

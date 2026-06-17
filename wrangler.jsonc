@@ -3,6 +3,9 @@
   "name": "wijnlandhomebrewclub",
   "main": "worker/index.js",
   "compatibility_date": "2026-06-08",
+  "vars": {
+    "CONTACT_TO_EMAIL": "wijnlandcommittee@gmail.com"
+  },
   "observability": {
     "enabled": true
   },

@@ -6,6 +6,15 @@ import { Container, Section, SectionTitle, BorderImage } from '../styles/GlobalS
 
 const WelcomeSection = styled(Section)`
   background: var(--white);
+  position: relative;
+  z-index: 1;
+  margin-top: -8rem;
+  border-top: 4px solid var(--black);
+  box-shadow: 0 -1.2rem 0 var(--black);
+
+  @media (max-width: 640px) {
+    margin-top: -4rem;
+  }
 `;
 
 const WelcomeGrid = styled(Container)`

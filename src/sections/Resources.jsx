@@ -1,8 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
+import { RiFile4Fill } from "react-icons/ri";
 
 const ResourcesSection = styled(Section)`
+  background: var(--white);
+  position: relative;
+  z-index: 1;
 `;
 
 const ResourcesGrid = styled.div`
@@ -24,6 +28,11 @@ const ResourceCard = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
+
+  svg {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const ResourceName = styled.p`
@@ -32,6 +41,10 @@ const ResourceName = styled.p`
   font-weight: bold;
   text-transform: uppercase;
   color: var(--text);
+
+  @media (max-width: 640px) {
+    font-size: 1.8rem;
+  }
 `;
 
 const ResourceSize = styled.p`
@@ -49,8 +62,7 @@ const ResourceButton = styled.a`
   transition: color 0.2s;
 
   &:hover {
-    color: var(--gold-light);
-    border-color: var(--gold-light);
+    color: var(--black);
   }
 `;
 
@@ -77,16 +89,6 @@ const resourcesData = [
   },
 ];
 
-function PdfIcon() {
-  return (
-    <svg viewBox="0 0 56 72" width="48" height="62">
-      <rect x="0" y="0" width="56" height="72" rx="4" fill="#f0f0f0" />
-      <polygon points="36,0 56,20 36,20" fill="#d0d0d0" />
-      <rect x="0" y="28" width="56" height="24" rx="0" fill="#D32F2F" />
-      <text x="28" y="45" textAnchor="middle" fill="white" fontSize="13" fontFamily="Oswald, sans-serif" fontWeight="700">PDF</text>
-    </svg>
-  );
-}
 
 export default function Resources() {
   return (
@@ -96,7 +98,7 @@ export default function Resources() {
         <ResourcesGrid>
           {resourcesData.map((resource) => (
             <ResourceCard key={resource.name}>
-              <PdfIcon />
+              <RiFile4Fill />
               <ResourceName>{resource.name}</ResourceName>
               <ResourceSize>{resource.fileSize}</ResourceSize>
               <ResourceButton href={resource.url} target="_blank" rel="noopener noreferrer">

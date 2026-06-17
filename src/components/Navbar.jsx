@@ -94,10 +94,17 @@ const LogoText = styled.span`
     color: var(--black);
     line-height: 1;
   }
+
+  @media (max-width: 640px) {
+    span {
+      margin-top: 0.4rem;
+      font-size: var(--header-font-size-md);
+    }
+  }
 `;
 
 const LogoSvg = styled.div`
-  display: flex;
+  display: none;
   width: 5rem;
   height: auto;
   opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
@@ -107,6 +114,10 @@ const LogoSvg = styled.div`
   svg {
     width: 100%;
     height: auto;
+  }
+
+  @media (min-width: 640px) {
+    display: flex;
   }
 `;
 

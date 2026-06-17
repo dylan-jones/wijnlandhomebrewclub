@@ -5,6 +5,8 @@ import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
 
 const GallerySection = styled(Section)`
   background: var(--white);
+  position: relative;
+  z-index: 1;
 `;
 
 const GalleryGrid = styled.div`

@@ -48,40 +48,54 @@ async function handleContact(request, env) {
 
   const firstName = String(payload?.fn ?? payload?.firstName ?? "").trim();
   const lastName = String(payload?.ln ?? payload?.lastName ?? "").trim();
+  const userEmail = String(payload?.email ?? payload?.userEmail ?? "").trim();
   const location = String(payload?.loc ?? payload?.location ?? "").trim();
   const phone = String(payload?.tel ?? payload?.phone ?? "").trim();
   const message = String(payload?.msg ?? payload?.message ?? "").trim();
+  const formType = String(payload?.formType ?? "contact").trim().toLowerCase();
 
-  if (!firstName || !lastName || !message) {
+  if (!firstName || !lastName || !userEmail || !message) {
     return json(
-      { ok: false, error: "First name, last name, and message are required." },
+      { ok: false, error: "First name, last name, email, and message are required." },
       { status: 422 }
     );
   }
 
-  const resendKey = env.RESEND_API_KEY;
+  const mailerSendKey = env.MAILERSEND_API_TOKEN;
   const toEmail = env.CONTACT_TO_EMAIL;
-  const fromEmail = env.CONTACT_FROM_EMAIL;
+  const fromEmail = env.CONTACT_FROM_EMAIL || toEmail;
+  const senderName = "Wijnland Homebrew Club";
 
-  if (!resendKey || !toEmail || !fromEmail) {
+  if (!mailerSendKey || !toEmail || !fromEmail) {
     return json(
       {
         ok: false,
         error:
-          "Contact form is not configured yet. Add RESEND_API_KEY, CONTACT_TO_EMAIL, and CONTACT_FROM_EMAIL in Cloudflare.",
+          "Contact form is not configured yet. Add MAILERSEND_API_TOKEN and CONTACT_TO_EMAIL in Cloudflare.",
       },
       { status: 500 }
     );
   }
 
-  if (!isEmail(toEmail) || !isEmail(fromEmail)) {
-    return json({ ok: false, error: "Configured contact emails are invalid." }, { status: 500 });
+  if (!isEmail(toEmail) || !isEmail(fromEmail) || !isEmail(userEmail)) {
+    return json(
+      {
+        ok: false,
+        error:
+          "Configured contact emails are invalid. MailerSend requires from.email to be a verified sender; the user's email is used as reply_to.",
+      },
+      { status: 500 }
+    );
   }
 
+  const normalizedFormType = formType === "join" ? "join" : "contact";
+  const subjectPrefix = normalizedFormType === "join" ? "New join form submission" : "New contact message";
+
   const text = [
-    "New website contact message",
+    normalizedFormType === "join" ? "New website join request" : "New website contact message",
     "",
     `Name: ${firstName} ${lastName}`,
+    `Email: ${userEmail}`,
     `Location: ${location || "Not provided"}`,
     `Phone: ${phone || "Not provided"}`,
     "",
@@ -89,22 +103,34 @@ async function handleContact(request, env) {
     message,
   ].join("\n");
 
-  const resendResponse = await fetch("https://api.resend.com/emails", {
+  const mailerSendResponse = await fetch("https://api.mailersend.com/v1/email", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${resendKey}`,
+      Authorization: `Bearer ${mailerSendKey}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: fromEmail,
-      to: [toEmail],
-      subject: `Contact message from ${firstName} ${lastName}`,
+      from: {
+        email: fromEmail,
+        name: senderName || fromEmail,
+      },
+      to: [
+        {
+          email: toEmail,
+          name: "Wijnland Committee",
+        },
+      ],
+      reply_to: {
+        email: userEmail,
+        name: `${firstName} ${lastName}`.trim(),
+      },
+      subject: `${subjectPrefix}: ${firstName} ${lastName}`,
       text,
     }),
   });
 
-  if (!resendResponse.ok) {
-    const details = await resendResponse.text().catch(() => "");
+  if (!mailerSendResponse.ok) {
+    const details = await mailerSendResponse.text().catch(() => "");
     return json(
       {
         ok: false,
@@ -115,7 +141,13 @@ async function handleContact(request, env) {
     );
   }
 
-  return json({ ok: true });
+  return json(
+    {
+      ok: true,
+      messageId: mailerSendResponse.headers.get("x-message-id") || null,
+    },
+    { status: 202 }
+  );
 }
 
 export default {
@@ -128,10 +160,6 @@ export default {
       }
 
       return json({ ok: false, error: "Method Not Allowed" }, { status: 405 });
-    }
-
-    if (url.pathname === "/api/calendar-key") {
-      return json({ key: env.VITE_GOOGLE_CALENDAR_API_KEY || "" });
     }
 
     if (env?.ASSETS && typeof env.ASSETS.fetch === "function") {

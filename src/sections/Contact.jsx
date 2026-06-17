@@ -37,7 +37,7 @@ const ContactSection = styled(Section)`
 `;
 
 export default function Contact() {
-  const [form, setForm] = useState({ fn: '', ln: '', loc: '', tel: '', msg: '' });
+  const [form, setForm] = useState({ fn: '', ln: '', email: '', loc: '', tel: '', msg: '', formType: 'contact' });
   const [status, setStatus] = useState('idle');
   const [feedback, setFeedback] = useState('');
   const set = e => setForm({ ...form, [e.target.name]: e.target.value });
@@ -70,7 +70,7 @@ export default function Contact() {
 
       setStatus('success');
       setFeedback("Message sent! We'll get back to you soon.");
-      setForm({ fn: '', ln: '', loc: '', tel: '', msg: '' });
+      setForm({ fn: '', ln: '', email: '', loc: '', tel: '', msg: '', formType: 'contact' });
     } catch (error) {
       setStatus('error');
       setFeedback(error.message || 'Unable to send your message right now. Please try again later.');
@@ -102,11 +102,13 @@ We’re always down to talk shop - or just beer.
             <input id="contact-ln" name="ln" placeholder="Last Name" value={form.ln} onChange={set} autoComplete="family-name" required />
           </FormGrid>
           <FormGrid>
+            <HiddenLabel htmlFor="contact-email">Email Address</HiddenLabel>
+            <input id="contact-email" name="email" placeholder="Email Address" value={form.email} onChange={set} type="email" autoComplete="email" required />
             <HiddenLabel htmlFor="contact-loc">Location</HiddenLabel>
             <input id="contact-loc" name="loc" placeholder="Location" value={form.loc} onChange={set} autoComplete="address-level2" />
-            <HiddenLabel htmlFor="contact-tel">Contact Number</HiddenLabel>
-            <input id="contact-tel" name="tel" placeholder="Contact Number" value={form.tel} onChange={set} type="tel" autoComplete="tel" />
           </FormGrid>
+          <HiddenLabel htmlFor="contact-tel">Contact Number</HiddenLabel>
+          <input id="contact-tel" name="tel" placeholder="Contact Number" value={form.tel} onChange={set} type="tel" autoComplete="tel" />
           <HiddenLabel htmlFor="contact-msg">Message</HiddenLabel>
           <textarea id="contact-msg" name="msg" placeholder="Message" value={form.msg} onChange={set} rows={5} required />
           <PrimaryButton type="submit" disabled={status === 'submitting'}>

@@ -6,6 +6,8 @@ import { GiLaurelsTrophy } from "react-icons/gi";
 
 const AboutSection = styled(Section)`
   background: var(--white);
+  position: relative;
+  z-index: 1;
 `;
 
 const AboutGrid = styled(Container)`

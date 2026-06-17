@@ -8,6 +8,8 @@ const FooterShell = styled.footer`
   color: var(--black);
   padding: 2rem 0;
   border-top: 4px solid var(--black);
+  z-index: 1;
+  position: relative;
 `;
 
 const FooterInner = styled(Container)`
@@ -38,6 +40,10 @@ const FooterBrand = styled.div`
   svg {
     height: 11rem;
     width: 10rem;
+  }
+
+  @media (max-width: 640px) {
+    align-items: center;
   }
 `;
 
@@ -80,14 +86,6 @@ const FooterLinks = styled.div`
   
   a:hover {
     color: var(--gold);
-  }
-
-  @media (max-width: 640px) {
-    flex-direction: column;
-    align-items: center;
-    a {
-      font-size: 1rem;
-    }
   }
 `;
 

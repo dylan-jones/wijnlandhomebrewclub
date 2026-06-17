@@ -4,6 +4,8 @@ import { Container, Section, SectionTitle } from '../styles/GlobalStyles';
 
 const EventsSection = styled(Section)`
   background-color: var(--off-white);
+  position: relative;
+  z-index: 1;
 `;
 
 const EventsGrid = styled.ul`
