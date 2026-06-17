@@ -159,7 +159,7 @@ export default {
         return json({ ok: false, error: "Method Not Allowed" }, { status: 405 });
       }
 
-      const key = String(env.GOOGLE_CALENDAR_API_KEY || "").trim();
+      const key = String(env.VITE_GOOGLE_CALENDAR_API_KEY || "").trim();
       if (!key) {
         return json({ ok: false, error: "Calendar API key is not configured." }, { status: 500 });
       }

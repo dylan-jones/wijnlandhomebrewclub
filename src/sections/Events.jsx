@@ -92,18 +92,25 @@ async function getCalendarApiKey() {
     return localKey.trim();
   }
 
-  const keyResponse = await fetch('/api/calendar-key');
-  if (!keyResponse.ok) {
-    throw new Error(`Calendar key endpoint error ${keyResponse.status}`);
-  }
+  try {
+    const keyResponse = await fetch('/api/calendar-key');
+    if (!keyResponse.ok) {
+      throw new Error(`Calendar key endpoint error ${keyResponse.status}`);
+    }
 
-  const payload = await keyResponse.json();
-  const key = typeof payload?.key === 'string' ? payload.key.trim() : '';
-  if (!key) {
-    throw new Error('Calendar API key not available');
-  }
+    const payload = await keyResponse.json();
+    const key = typeof payload?.key === 'string' ? payload.key.trim() : '';
+    if (!key) {
+      throw new Error('Calendar API key not available');
+    }
 
-  return key;
+    return key;
+  } catch (err) {
+    if (import.meta.env.DEV) {
+      throw new Error('Dev mode: VITE_GOOGLE_CALENDAR_API_KEY not found in .env');
+    }
+    throw new Error(`Production: set GOOGLE_CALENDAR_API_KEY secret in Cloudflare. Details: ${err instanceof Error ? err.message : ''}`);
+  }
 }
 
 function formatDate(start) {

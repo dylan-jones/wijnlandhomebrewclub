@@ -32,13 +32,33 @@ Local note:
 
 The events section reads from a Google Calendar and needs a Calendar API key.
 
-Two supported setups:
+### Local dev setup
 
-- Local Vite dev: set `VITE_GOOGLE_CALENDAR_API_KEY` in `.env`.
-- Cloudflare worker/runtime: set `GOOGLE_CALENDAR_API_KEY` as a Wrangler secret. The frontend fetches it from `/api/calendar-key`.
+Set `VITE_GOOGLE_CALENDAR_API_KEY` in `.env`:
 
-Set worker secret with Wrangler:
+```
+VITE_GOOGLE_CALENDAR_API_KEY=<your-api-key>
+```
+
+When running `npm run dev`, this key is used directly in the browser.
+
+### Production setup
+
+When deployed to Cloudflare Workers, set the same key as a secret:
 
 ```bash
-npx wrangler secret put GOOGLE_CALENDAR_API_KEY
+npx wrangler secret put VITE_GOOGLE_CALENDAR_API_KEY
 ```
+
+The worker exposes it via `/api/calendar-key` and the frontend fetches it securely.
+
+### Troubleshooting
+
+- **Local dev**: If calendar won't load, verify:
+  - The API key has Calendar API enabled in Google Cloud Console.
+  - The calendar is shared publicly (public read access).
+  - No IP/HTTP referer restrictions on the API key.
+
+- **Production (500 error on /api/calendar-key)**: Run the wrangler secret command above, then redeploy.
+  
+- **403 Forbidden error**: The API key may lack Calendar API permissions or the calendar may be private. Check Google Cloud Console API restrictions.
