@@ -123,16 +123,15 @@ export default function AboutUs() {
           </p>
         </AboutText>
         <AboutRight>
-          <BorderImage style={{ marginBottom: '2.4rem' }}>
-            <img src={ABOUT_IMAGES[0]} alt="Club gathering" />
-          </BorderImage>
-          <BorderImage style={{ marginBottom: '2.4rem' }}>
-            <img src={ABOUT_IMAGES[1]} alt="Club gathering" />
-          </BorderImage>
+          {ABOUT_IMAGES.map((image) => (
+            <BorderImage key={image} style={{ marginBottom: '2.4rem' }}>
+              <img src={image} alt="Club gathering" />
+            </BorderImage>
+          ))}
           <CupContainer>
             <CupBadge>
               <GiLaurelsTrophy size={56} color="var(--gold)" />
-                <h4>WF Cup Winners</h4>
+                <h4>WP Cup Winners</h4>
                 <p>2022, 2023, 2024</p>
             </CupBadge>
           </CupContainer>

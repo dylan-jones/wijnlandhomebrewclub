@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container, Section, SectionTitle, DeviderLine } from '../styles/GlobalStyles';
-import { RiFile4Fill } from "react-icons/ri";
+import { RiExternalLinkLine, RiFile4Fill } from "react-icons/ri";
 
 const ResourcesSection = styled(Section)`
   background: var(--white);
@@ -69,27 +69,21 @@ const ResourceButton = styled.a`
 
 const resourcesData = [
   {
-    name: 'Brew Day Guide',
-    fileSize: '1.2 MB',
-    url: '/resources/brew-day-guide.pdf',
-  },
-  {
-    name: 'Competition Rules',
+    name: 'Club Constitution',
     fileSize: '860 KB',
-    url: '/resources/competition-rules.pdf',
+    url: '/resources/club-constitution.pdf',
   },
   {
-    name: 'Style Guidelines',
-    fileSize: '2.1 MB',
-    url: '/resources/style-guidelines.pdf',
+    name: '2026 Brew League',
+    url: 'https://drive.google.com/file/d/1c1AIiAufzq5DKJvYIpqAfCGJrpfYKwnM/view',
   },
   {
-    name: 'Membership Form',
-    fileSize: '540 KB',
-    url: '/resources/membership-form.pdf',
-  },
+    name: 'Google Calendar',
+    url: 'https://calendar.google.com/calendar/u/0/r?cid=ZmE3NDA4MzY3ZDE4ODI3NzhlNGIxZmYxOGQ1YTFkNDk4YzNjMzllNDc0M2I5MWM5NDQ4YjQxYzI1NDc1ODMyZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t',
+  }
 ];
 
+const isServerHostedPdf = (url) => url.startsWith('/') && url.toLowerCase().endsWith('.pdf');
 
 export default function Resources() {
   return (
@@ -100,11 +94,11 @@ export default function Resources() {
         <ResourcesGrid>
           {resourcesData.map((resource) => (
             <ResourceCard key={resource.name}>
-              <RiFile4Fill />
+              {isServerHostedPdf(resource.url) ? <RiFile4Fill /> : <RiExternalLinkLine />}
               <ResourceName>{resource.name}</ResourceName>
               <ResourceSize>{resource.fileSize}</ResourceSize>
               <ResourceButton href={resource.url} target="_blank" rel="noopener noreferrer">
-                DOWNLOAD
+                {isServerHostedPdf(resource.url) ? 'DOWNLOAD' : 'OPEN'}
               </ResourceButton>
             </ResourceCard>
           ))}

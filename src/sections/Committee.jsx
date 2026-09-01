@@ -63,9 +63,9 @@ const MemberMeta = styled.p`
 `;
 
 const committeeData = [
-  { name: 'NAME SURNAME', image: COMMITTEE_IMAGES[0], style: 'IPA', arc: '234' },
-  { name: 'NAME SURNAME', image: COMMITTEE_IMAGES[1], style: 'Stout', arc: '456' },
-  { name: 'NAME SURNAME', image: COMMITTEE_IMAGES[2], style: 'Lager', arc: '789' },
+  { name: 'Ryno Mayer', image: COMMITTEE_IMAGES[0], style: 'IPA', role: 'Chairperson' },
+  { name: 'Gerhard Gous', image: COMMITTEE_IMAGES[1], style: 'Stout', role: 'Vice Chair' },
+  { name: 'Lindsay Williams', image: COMMITTEE_IMAGES[2], style: 'Lager', role: 'Secretary' },
 ];
 
 export default function Committee() {
@@ -76,12 +76,12 @@ export default function Committee() {
         <SectionTitle>THE COMMITTEE</SectionTitle>
         <CommitteeGrid>
           {committeeData.map((m) => ( 
-            <CommitteeCard key={`${m.name}-${m.style}-${m.arc}`}>
+            <CommitteeCard key={`${m.name}-${m.style}`}>
               <MemberAvatar>
                 <img src={m.image} alt={m.name} />
               </MemberAvatar>
               <h4>{m.name}</h4>
-              <MemberMeta>Role</MemberMeta>
+              <MemberMeta><span>{m.role}</span></MemberMeta>
               <MemberMeta>FAV. STYLE &nbsp;<span>{m.style}</span></MemberMeta>
             </CommitteeCard>
           ))}
